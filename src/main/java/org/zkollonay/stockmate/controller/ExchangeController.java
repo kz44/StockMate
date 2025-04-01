@@ -15,6 +15,9 @@ import org.zkollonay.stockmate.service.ExchangeRateService;
 public class ExchangeController {
   private final ExchangeRateService exchangeRateService;
 
+  /**
+   * Get getExchangeRateDetails. ExchangeRateDTO -> (fromCurrency, toCurrency, exchangeRate, 1 originalAmount, convertedAmount)
+   */
   @GetMapping("/rate")
   public ResponseEntity<ExchangeRateDTO> getExchangeRatePer1(
       @RequestParam String fromCurrency,
@@ -22,6 +25,9 @@ public class ExchangeController {
     return ResponseEntity.ok(exchangeRateService.getExchangeRateDetails(fromCurrency, toCurrency));
   }
 
+  /**
+   * Covert xy amount money from the given currency to a new one -> ExchangeRateDTO
+   */
   @GetMapping("/convertTo")
   public ResponseEntity<ExchangeRateDTO> convertTo(
       @RequestParam double amount,

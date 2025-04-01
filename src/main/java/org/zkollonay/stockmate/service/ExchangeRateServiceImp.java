@@ -32,6 +32,10 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
 
 
   public ExchangeRateDTO getExchangeRateDetails(String fromCurrency, String toCurrency) {
+    if (fromCurrency.equals(toCurrency)) {
+      throw new IllegalArgumentException("fromCurrency and toCurrency are both equal");
+    }
+
     double rate = fetchExchangeRate(fromCurrency, toCurrency);
 
     return ExchangeRateDTO.builder()
@@ -44,6 +48,10 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
   }
 
   public ExchangeRateDTO convertToCurrency(double amount, String fromCurrency, String toCurrency) {
+    if (fromCurrency.equals(toCurrency)) {
+      throw new IllegalArgumentException("fromCurrency and toCurrency are both equal");
+    }
+
     double rate = fetchExchangeRate(fromCurrency, toCurrency); // Get the exchange rate
     double convertedAmount = amount * rate; // Get the converted amount
 
