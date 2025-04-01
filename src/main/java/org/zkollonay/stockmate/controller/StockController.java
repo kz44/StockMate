@@ -82,14 +82,4 @@ public class StockController {
   public ResponseEntity<List<StockDTO>> searchStock(@RequestBody StockDTO filter) {
     return ResponseEntity.ok(stockService.filterStocks(filter));
   }
-
-
-  /**
-   * Not finished need to calculate price
-   */
-  @GetMapping("/most-valuable")
-  public ResponseEntity<StockDTO> getMostValuableStock() {
-    return ResponseEntity.ok(stockService.getMostValuableStock());
-  }
-
 }

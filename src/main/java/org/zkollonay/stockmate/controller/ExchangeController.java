@@ -19,7 +19,7 @@ public class ExchangeController {
    * Get getExchangeRateDetails. ExchangeRateDTO -> (fromCurrency, toCurrency, exchangeRate, 1 originalAmount, convertedAmount)
    */
   @GetMapping("/rate")
-  public ResponseEntity<ExchangeRateDTO> getExchangeRatePer1(
+  public ResponseEntity<ExchangeRateDTO> getExchangeRateDetails(
       @RequestParam String fromCurrency,
       @RequestParam String toCurrency) {
     return ResponseEntity.ok(exchangeRateService.getExchangeRateDetails(fromCurrency, toCurrency));
@@ -29,7 +29,7 @@ public class ExchangeController {
    * Covert xy amount money from the given currency to a new one -> ExchangeRateDTO
    */
   @GetMapping("/convertTo")
-  public ResponseEntity<ExchangeRateDTO> convertTo(
+  public ResponseEntity<ExchangeRateDTO> convertToCurrency(
       @RequestParam double amount,
       @RequestParam String fromCurrency,
       @RequestParam String toCurrency) {

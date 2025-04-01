@@ -100,9 +100,4 @@ public class StockServiceImp implements StockService {
   public List<StockDTO> filterStocks(StockDTO filter) {
     return stockRepository.findFilteredStocks(filter.getName(), filter.getStockIdentifier(), filter.getDescription()).stream().map(stockMapper::toDTO).toList();
   }
-
-  @Override
-  public StockDTO getMostValuableStock() {
-    return null;
-  }
 }

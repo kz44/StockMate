@@ -23,6 +23,4 @@ public interface StockService {
   NewStockDTO updateStockById(final NewStockDTO newStockDTO, long stockID);
 
   List<StockDTO> filterStocks(StockDTO filter);
-
-  StockDTO getMostValuableStock();
 }
