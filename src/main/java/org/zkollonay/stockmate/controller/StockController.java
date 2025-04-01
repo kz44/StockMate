@@ -6,10 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.zkollonay.stockmate.DTO.NewStockDTO;
 import org.zkollonay.stockmate.DTO.StockDTO;
-import org.zkollonay.stockmate.service.ExchangeRateServiceImp;
 import org.zkollonay.stockmate.service.StockService;
 
-import java.util.Currency;
 import java.util.List;
 
 @RestController
@@ -18,7 +16,6 @@ import java.util.List;
 public class StockController {
 
   private final StockService stockService;
-  private final ExchangeRateServiceImp exchangeRateServiceImp;
 
 
   /**
@@ -95,8 +92,4 @@ public class StockController {
     return ResponseEntity.ok(stockService.getMostValuableStock());
   }
 
-  @GetMapping("/exchange")
-  public ResponseEntity<Double> getHufStock(@RequestParam Double amount, @RequestParam Currency currency) {
-    return ResponseEntity.ok(exchangeRateServiceImp.convertToHUF(amount, currency.toString()));
-  }
 }

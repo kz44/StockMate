@@ -5,31 +5,54 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.zkollonay.stockmate.DTO.ExchangeRateDTO;
 
 @Service
 @RequiredArgsConstructor
-public class ExchangeRateServiceImp {
+public class ExchangeRateServiceImp implements ExchangeRateService {
 
-  private final RestTemplate restTemplate;
-  private final ObjectMapper objectMapper;
+  private final RestTemplate restClient;
+  private final ObjectMapper jsonMapper;
 
-  private final String apiUrl = "https://v6.exchangerate-api.com/v6/832fbb78b6d27cf4385b78d0/latest/USD"; //USD adatokat szolgal ki
+  private final double DEFAULT_AMOUNT = 1;
+  private final String EXCHANGE_API_BASE_URL = "https://v6.exchangerate-api.com/v6/832fbb78b6d27cf4385b78d0/latest/";
 
-  public double getExchangeRate(String fromCurrency, String toCurrency) {
+
+  @Override
+  public double fetchExchangeRate(String fromCurrency, String toCurrency) {
     try {
-      String response = restTemplate.getForObject(apiUrl, String.class);  // -> lekerdezi az api valaszat
-      JsonNode root = objectMapper.readTree(response); // json feldolgozasa amit az api visszaadott
-      return root.path("conversion_rates").path(toCurrency).asDouble(); // -> kiolvassa az adott penznem arfolzamat
+      String requestApiUrl = EXCHANGE_API_BASE_URL + fromCurrency;
+      String apiResponse = restClient.getForObject(requestApiUrl, String.class);  // Get API answers
+      JsonNode responseJson = jsonMapper.readTree(apiResponse); // Convert to JSON
+      return responseJson.path("conversion_rates").path(toCurrency).asDouble(); // -> Read the current exchange rate
     } catch (Exception e) {
-      throw new RuntimeException("Hiba történt az API elérésekor", e); // hiba eseten kivetelt dob
+      throw new RuntimeException("Failed to fetch exchange rate from external service", e);
     }
   }
 
-  public double convertToHUF(double amount, String currency) {
-    if ("HUF".equalsIgnoreCase(currency)) {
-      return amount; // Ha már HUF, nem kell váltani
-    }
-    double rate = getExchangeRate(currency, "HUF"); // --lekerei az arfolyamot a fentebbi metodussal
-    return amount * rate; // atvaltja az osszeget forintra
+
+  public ExchangeRateDTO getExchangeRateDetails(String fromCurrency, String toCurrency) {
+    double rate = fetchExchangeRate(fromCurrency, toCurrency);
+
+    return ExchangeRateDTO.builder()
+        .fromCurrency(fromCurrency)
+        .toCurrency(toCurrency)
+        .exchangeRate(rate)
+        .originalAmount(DEFAULT_AMOUNT)
+        .convertedAmount(DEFAULT_AMOUNT * rate)
+        .build();
+  }
+
+  public ExchangeRateDTO convertToCurrency(double amount, String fromCurrency, String toCurrency) {
+    double rate = fetchExchangeRate(fromCurrency, toCurrency); // Get the exchange rate
+    double convertedAmount = amount * rate; // Get the converted amount
+
+    return ExchangeRateDTO.builder()
+        .fromCurrency(fromCurrency)
+        .toCurrency(toCurrency)
+        .exchangeRate(rate)
+        .originalAmount(amount)
+        .convertedAmount(convertedAmount)
+        .build();
   }
 }
