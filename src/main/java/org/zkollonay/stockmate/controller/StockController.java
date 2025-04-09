@@ -85,12 +85,12 @@ public class StockController {
   }
 
   /**
-   * Get purchased list of stocks between the given date. NewStockDTO
+   * Get purchased list of stocks between the given date. List -> NewStockDTO
    */
   @GetMapping("/years")
-  public ResponseEntity<List<NewStockDTO>> getStocksByYear(@RequestParam LocalDateTime fromDate,
+  public ResponseEntity<List<NewStockDTO>> getStocksByYearFromTo(@RequestParam LocalDateTime fromDate,
                                                            @RequestParam LocalDateTime toDate) {
-    return ResponseEntity.ok(stockService.getStocksByYear(fromDate, toDate));
+    return ResponseEntity.ok(stockService.getStocksByYearFromTo(fromDate, toDate));
   }
 
   /**
@@ -99,5 +99,13 @@ public class StockController {
   @GetMapping("/description")
   public ResponseEntity<String> getFullDescriptionByStockIdentifier(@Param("stockIdentifier") String stockIdentifier) {
     return ResponseEntity.ok(stockService.getFullDescriptionByStocksIdentifier(stockIdentifier));
+  }
+
+  /**
+   * Get purchased list of stocks by year. List -> NewStockDTO
+   */
+  @GetMapping("/year")
+  public ResponseEntity<List<NewStockDTO>> getStocksByYear(@RequestParam Integer year) {
+    return ResponseEntity.ok(stockService.getStocksByYear(year));
   }
 }

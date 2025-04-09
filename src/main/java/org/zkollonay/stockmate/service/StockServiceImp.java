@@ -9,6 +9,7 @@ import org.zkollonay.stockmate.mapper.StockMapper;
 import org.zkollonay.stockmate.repository.StockRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,12 +105,17 @@ public class StockServiceImp implements StockService {
   }
 
   @Override
-  public List<NewStockDTO> getStocksByYear(LocalDateTime from, LocalDateTime to) {
+  public List<NewStockDTO> getStocksByYearFromTo(LocalDateTime from, LocalDateTime to) {
     return stockRepository.findYears(from, to).stream().map(stockMapper::toNewDTO).toList();
   }
 
   @Override
   public String getFullDescriptionByStocksIdentifier(String stockIdentifier) {
     return stockRepository.getFullDescription(stockIdentifier);
+  }
+
+  @Override
+  public List<NewStockDTO> getStocksByYear(Integer year) {
+    return stockRepository.findByPurchaseYear(year).stream().map(stockMapper::toNewDTO).toList();
   }
 }

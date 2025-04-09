@@ -45,6 +45,10 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
 
   List<Stock> findAllByCurrency(Currency currency);
+
+
+  @Query("SELECT s FROM Stock s WHERE EXTRACT(YEAR FROM s.purchaseDate) = :year")
+  List<Stock> findByPurchaseYear(@Param("year") Integer year);
 }
 
 

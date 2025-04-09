@@ -27,7 +27,9 @@ public interface StockService {
 
   List<StockDTO> filterStocks(StockDTO filter);
 
-  List<NewStockDTO> getStocksByYear(LocalDateTime from, LocalDateTime to);
+  List<NewStockDTO> getStocksByYearFromTo(LocalDateTime from, LocalDateTime to);
 
   String getFullDescriptionByStocksIdentifier(String stockIdentifier);
+
+  List<NewStockDTO> getStocksByYear(Integer year);
 }
