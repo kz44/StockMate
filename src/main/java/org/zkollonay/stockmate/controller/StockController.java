@@ -1,13 +1,14 @@
 package org.zkollonay.stockmate.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.zkollonay.stockmate.DTO.NewStockDTO;
 import org.zkollonay.stockmate.DTO.StockDTO;
 import org.zkollonay.stockmate.service.StockService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ public class StockController {
    * Add new Stock with all details. NewStockDTO
    */
   @PostMapping()
-  public ResponseEntity<NewStockDTO> addNewStock(@RequestBody @Valid NewStockDTO newStockDTO) {
+  public ResponseEntity<NewStockDTO> addNewStock(@RequestBody NewStockDTO newStockDTO) {
     return ResponseEntity.ok(stockService.addNewStock(newStockDTO));
   }
 
@@ -81,5 +82,22 @@ public class StockController {
   @GetMapping("/filter")
   public ResponseEntity<List<StockDTO>> searchStock(@RequestBody StockDTO filter) {
     return ResponseEntity.ok(stockService.filterStocks(filter));
+  }
+
+  /**
+   * Get purchased list of stocks between the given date. NewStockDTO
+   */
+  @GetMapping("/years")
+  public ResponseEntity<List<NewStockDTO>> getStocksByYear(@RequestParam LocalDateTime fromDate,
+                                                           @RequestParam LocalDateTime toDate) {
+    return ResponseEntity.ok(stockService.getStocksByYear(fromDate, toDate));
+  }
+
+  /**
+   * Get full description by stock identifier limit 1 -> String
+   */
+  @GetMapping("/description")
+  public ResponseEntity<String> getFullDescriptionByStockIdentifier(@Param("stockIdentifier") String stockIdentifier) {
+    return ResponseEntity.ok(stockService.getFullDescriptionByStocksIdentifier(stockIdentifier));
   }
 }

@@ -48,12 +48,14 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
   }
 
   public ExchangeRateDTO convertToCurrency(double amount, String fromCurrency, String toCurrency) {
+    double convertedAmount = 0;
+
     if (fromCurrency.equals(toCurrency)) {
-      throw new IllegalArgumentException("fromCurrency and toCurrency are both equal");
+      convertedAmount = amount;
     }
 
     double rate = fetchExchangeRate(fromCurrency, toCurrency); // Get the exchange rate
-    double convertedAmount = amount * rate; // Get the converted amount
+    convertedAmount = amount * rate; // Get the converted amount
 
     return ExchangeRateDTO.builder()
         .fromCurrency(fromCurrency)

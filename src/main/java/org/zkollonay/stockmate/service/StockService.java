@@ -1,9 +1,12 @@
 package org.zkollonay.stockmate.service;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.zkollonay.stockmate.DTO.InvestedDTO;
 import org.zkollonay.stockmate.DTO.NewStockDTO;
 import org.zkollonay.stockmate.DTO.StockDTO;
+import org.zkollonay.stockmate.ENUM.Currency;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface StockService {
@@ -23,4 +26,8 @@ public interface StockService {
   NewStockDTO updateStockById(final NewStockDTO newStockDTO, long stockID);
 
   List<StockDTO> filterStocks(StockDTO filter);
+
+  List<NewStockDTO> getStocksByYear(LocalDateTime from, LocalDateTime to);
+
+  String getFullDescriptionByStocksIdentifier(String stockIdentifier);
 }

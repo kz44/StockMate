@@ -32,7 +32,10 @@ public class Stock {
   private Double amount;
 
   @NotBlank
-  private String description;
+  private String sumDescription;
+
+  @NotBlank
+  private String fullDescription;
 
   @Enumerated(EnumType.STRING)
   private TradingVenue tradingVenue;
@@ -42,7 +45,7 @@ public class Stock {
   @NonNull
   private Double purchasePricePerPiece;
 
-  @NonNull
+
   private Double purchasePriceTotal;
 
   @Enumerated(EnumType.STRING)
@@ -51,4 +54,10 @@ public class Stock {
   @Enumerated(EnumType.STRING)
   private StockType stockType;
 
+  @PrePersist
+  public void calculatePurchasePriceTotal() {
+    if (purchasePriceTotal == null) {
+      purchasePriceTotal = purchasePricePerPiece * amount;
+    }
+  }
 }

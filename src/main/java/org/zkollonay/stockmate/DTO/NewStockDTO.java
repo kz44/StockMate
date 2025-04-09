@@ -26,7 +26,10 @@ public class NewStockDTO {
   private Double amount;
 
   @NotBlank
-  private String description;
+  private String sumDescription;
+
+  @NotBlank
+  private String fullDescription;
 
   @Enumerated(EnumType.STRING)
   private TradingVenue tradingVenue;

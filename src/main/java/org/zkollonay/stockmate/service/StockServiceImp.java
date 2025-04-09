@@ -8,6 +8,7 @@ import org.zkollonay.stockmate.domain.Stock;
 import org.zkollonay.stockmate.mapper.StockMapper;
 import org.zkollonay.stockmate.repository.StockRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public class StockServiceImp implements StockService {
 
   private final StockRepository stockRepository;
   private final StockMapper stockMapper;
-  private final ExchangeRateServiceImp exchangeRateServiceImp;
+  private final ExchangeRateService exchangeRateService;
 
 
   @Override
@@ -84,7 +85,8 @@ public class StockServiceImp implements StockService {
     oldStock.setName(newStockDTO.getName());
     oldStock.setStockIdentifier(newStockDTO.getStockIdentifier());
     oldStock.setAmount(newStockDTO.getAmount());
-    oldStock.setDescription(newStockDTO.getDescription());
+    oldStock.setSumDescription(newStockDTO.getSumDescription());
+    oldStock.setFullDescription(newStockDTO.getFullDescription());
     oldStock.setTradingVenue(newStockDTO.getTradingVenue());
     oldStock.setPurchaseDate(newStockDTO.getPurchaseDate());
     oldStock.setPurchasePricePerPiece(newStockDTO.getPurchasePricePerPiece());
@@ -99,5 +101,15 @@ public class StockServiceImp implements StockService {
   @Override
   public List<StockDTO> filterStocks(StockDTO filter) {
     return stockRepository.findFilteredStocks(filter.getName(), filter.getStockIdentifier(), filter.getDescription()).stream().map(stockMapper::toDTO).toList();
+  }
+
+  @Override
+  public List<NewStockDTO> getStocksByYear(LocalDateTime from, LocalDateTime to) {
+    return stockRepository.findYears(from, to).stream().map(stockMapper::toNewDTO).toList();
+  }
+
+  @Override
+  public String getFullDescriptionByStocksIdentifier(String stockIdentifier) {
+    return stockRepository.getFullDescription(stockIdentifier);
   }
 }

@@ -15,7 +15,8 @@ public class StockMapper {
         .name(stock.getName())
         .stockIdentifier(stock.getStockIdentifier())
         .amount(stock.getAmount())
-        .description(stock.getDescription())
+        .sumDescription(stock.getSumDescription())
+        .fullDescription(stock.getFullDescription())
         .tradingVenue(stock.getTradingVenue())
         .purchaseDate(stock.getPurchaseDate())
         .purchasePricePerPiece(stock.getPurchasePricePerPiece())
@@ -31,7 +32,8 @@ public class StockMapper {
         .name(newStockDTO.getName())
         .stockIdentifier(newStockDTO.getStockIdentifier())
         .amount(newStockDTO.getAmount())
-        .description(newStockDTO.getDescription())
+        .sumDescription(newStockDTO.getSumDescription())
+        .fullDescription(newStockDTO.getFullDescription())
         .tradingVenue(newStockDTO.getTradingVenue())
         .purchaseDate(newStockDTO.getPurchaseDate())
         .purchasePricePerPiece(newStockDTO.getPurchasePricePerPiece())
@@ -47,7 +49,7 @@ public class StockMapper {
         .name(stock.getName())
         .stockIdentifier(stock.getStockIdentifier())
         .amount(stock.getAmount())
-        .description(stock.getDescription())
+        .description(stock.getSumDescription())
         .build();
   }
 
