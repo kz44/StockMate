@@ -80,7 +80,7 @@ public class StockController {
    * Search in stocks LIKE (based on: name, description, stockIdentifier). List -> StockDTO
    */
   @GetMapping("/filter")
-  public ResponseEntity<List<StockDTO>> searchStock(@RequestBody StockDTO filter) {
+  public ResponseEntity<List<StockDTO>> searchStock(@RequestParam String filter) {
     return ResponseEntity.ok(stockService.filterStocks(filter));
   }
 

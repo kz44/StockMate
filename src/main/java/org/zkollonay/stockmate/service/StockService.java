@@ -25,7 +25,7 @@ public interface StockService {
 
   NewStockDTO updateStockById(final NewStockDTO newStockDTO, long stockID);
 
-  List<StockDTO> filterStocks(StockDTO filter);
+  List<StockDTO> filterStocks(String filter);
 
   List<NewStockDTO> getStocksByYearFromTo(LocalDateTime from, LocalDateTime to);
 

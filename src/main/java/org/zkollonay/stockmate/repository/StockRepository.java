@@ -26,14 +26,11 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
 
   @Query("SELECT s FROM Stock s " +
-      "WHERE (:description IS NULL OR s.sumDescription LIKE %:description%) " +
-      "AND (:name IS NULL OR s.name LIKE %:name%) " +
-      "AND (:stockIdentifier IS NULL OR s.stockIdentifier LIKE %:stockIdentifier%)")
-  List<Stock> findFilteredStocks(
-      @Param("name") String name,
-      @Param("stockIdentifier") String stockIdentifier,
-      @Param("description") String description
-  );
+      "WHERE (:filter IS NULL OR " +
+      "LOWER(s.sumDescription) LIKE LOWER(CONCAT('%', :filter, '%')) " +
+      "OR LOWER(s.name) LIKE LOWER(CONCAT('%', :filter, '%')) " +
+      "OR LOWER(s.stockIdentifier) LIKE LOWER(CONCAT('%', :filter, '%')))")
+  List<Stock> findFilteredStocks(@Param("filter") String filter);
 
 
   @Query("SELECT s FROM Stock s WHERE s.purchaseDate BETWEEN :startDate AND :endDate")
