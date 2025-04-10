@@ -1,5 +1,7 @@
 package org.zkollonay.stockmate.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.zkollonay.stockmate.DTO.FullStockDTO;
 import org.zkollonay.stockmate.DTO.StockDTO;
@@ -11,7 +13,7 @@ public interface StockService {
 
   FullStockDTO addNewStock(final FullStockDTO fullStockDTO);
 
-  List<FullStockDTO> getAllStocks();
+  Page<FullStockDTO> getAllStocks(Pageable pageable);
 
   List<StockDTO> getSumStocks();
 
@@ -27,8 +29,7 @@ public interface StockService {
 
   List<FullStockDTO> getStocksByYearFromTo(LocalDateTime from, LocalDateTime to);
 
-  String getFullDescriptionByStocksIdentifier(String stockIdentifier) throws Exception;
+  String getFullDescriptionByStocksIdentifier(String stockIdentifier);
 
   List<FullStockDTO> getStocksByYear(Integer year);
-
 }

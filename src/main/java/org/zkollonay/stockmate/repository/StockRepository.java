@@ -15,14 +15,14 @@ import java.util.Optional;
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
   @Query("SELECT NEW org.zkollonay.stockmate.DTO.StockDTO(" +
-      "s.stockIdentifier, MIN(s.name), SUM(s.amount), MIN(s.sumDescription)) " +
+      "MIN(s.name), s.stockIdentifier, SUM(s.amount), MIN(s.sumDescription)) " +
       "FROM Stock s GROUP BY s.stockIdentifier")
   List<StockDTO> getStockSummary();
 
   List<Stock> findByStockIdentifier(String stockIdentifier);
 
   @Query("SELECT NEW org.zkollonay.stockmate.DTO.StockDTO(" +
-      "s.stockIdentifier, MIN(s.name), SUM(s.amount), MIN(s.sumDescription)) " +
+      "MIN(s.name), s.stockIdentifier, SUM(s.amount), MIN(s.sumDescription)) " +
       "FROM Stock s WHERE s.stockIdentifier = :stockIdentifier GROUP BY s.stockIdentifier")
   Optional<StockDTO> getStockSummaryByStockIdentifier(@Param("stockIdentifier") String stockIdentifier);
 

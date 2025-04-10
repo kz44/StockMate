@@ -1,7 +1,5 @@
 package org.zkollonay.stockmate.DTO;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.zkollonay.stockmate.ENUM.Currency;

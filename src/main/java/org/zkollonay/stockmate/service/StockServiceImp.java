@@ -2,6 +2,8 @@ package org.zkollonay.stockmate.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.zkollonay.stockmate.DTO.FullStockDTO;
 import org.zkollonay.stockmate.DTO.StockDTO;
@@ -20,7 +22,6 @@ public class StockServiceImp implements StockService {
   private final StockRepository stockRepository;
   private final StockMapper stockMapper;
 
-
   @Override
   public FullStockDTO addNewStock(FullStockDTO fullStockDTO) {
     Stock stock = stockMapper.toEntity(fullStockDTO);
@@ -29,8 +30,9 @@ public class StockServiceImp implements StockService {
   }
 
   @Override
-  public List<FullStockDTO> getAllStocks() {
-    return stockRepository.findAll().stream().map(stockMapper::toNewDTO).toList();
+  public Page<FullStockDTO> getAllStocks(Pageable pageable) {
+    Page<Stock> stockPage = stockRepository.findAll(pageable);
+    return stockPage.map(stockMapper::toNewDTO);
   }
 
   @Override
@@ -69,7 +71,6 @@ public class StockServiceImp implements StockService {
     oldStock.setTradingVenue(fullStockDTO.getTradingVenue());
     oldStock.setPurchaseDate(fullStockDTO.getPurchaseDate());
     oldStock.setPurchasePricePerPiece(fullStockDTO.getPurchasePricePerPiece());
-    oldStock.setPurchasePriceTotal(fullStockDTO.getPurchasePriceTotal());
     oldStock.setCurrency(fullStockDTO.getCurrency());
     oldStock.setStockType(fullStockDTO.getStockType());
     stockRepository.save(oldStock);
@@ -88,7 +89,7 @@ public class StockServiceImp implements StockService {
   }
 
   @Override
-  public String getFullDescriptionByStocksIdentifier(String stockIdentifier) throws Exception {
+  public String getFullDescriptionByStocksIdentifier(String stockIdentifier) {
     Optional<String> description = stockRepository.getFullDescription(stockIdentifier);
 
     return description.orElseThrow(() -> new EntityNotFoundException("Full description not found for stock identifier: " + stockIdentifier));
