@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.zkollonay.stockmate.DTO.InvestedDTO;
 import org.zkollonay.stockmate.DTO.NewStockDTO;
 import org.zkollonay.stockmate.DTO.StockDTO;
+import org.zkollonay.stockmate.DTO.YearAmountDTO;
 import org.zkollonay.stockmate.ENUM.Currency;
 
 import java.time.LocalDateTime;
@@ -32,4 +33,6 @@ public interface StockService {
   String getFullDescriptionByStocksIdentifier(String stockIdentifier);
 
   List<NewStockDTO> getStocksByYear(Integer year);
+
+  List<YearAmountDTO> getInvestmentAmountsByYear();
 }

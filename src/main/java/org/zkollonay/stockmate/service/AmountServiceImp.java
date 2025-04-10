@@ -25,9 +25,12 @@ public class AmountServiceImp implements AmountService {
       totalInvestmentAmount += stock.getPurchasePriceTotal();
     }
 
+    long roundedAmount = Math.round(totalInvestmentAmount);
+
     return InvestedDTO.builder()
         .currency(currency)
-        .amountInHUF((exchangeRateService.convertToCurrency(totalInvestmentAmount, currency.toString(), "HUF")).getConvertedAmount())
+        .amount(totalInvestmentAmount)
+        .amountInHUF((exchangeRateService.convertToCurrency(roundedAmount, currency.toString(), "HUF")).getConvertedAmount())
         .build();
   }
 

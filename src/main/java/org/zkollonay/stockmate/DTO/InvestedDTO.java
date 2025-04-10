@@ -12,7 +12,11 @@ import org.zkollonay.stockmate.ENUM.Currency;
 @Builder
 public class InvestedDTO {
 
+  private Currency currency;
+
+  private double amount;
+
   private double amountInHUF;
 
-  private Currency currency;
+
 }

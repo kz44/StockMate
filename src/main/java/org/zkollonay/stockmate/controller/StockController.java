@@ -89,7 +89,7 @@ public class StockController {
    */
   @GetMapping("/years")
   public ResponseEntity<List<NewStockDTO>> getStocksByYearFromTo(@RequestParam LocalDateTime fromDate,
-                                                           @RequestParam LocalDateTime toDate) {
+                                                                 @RequestParam LocalDateTime toDate) {
     return ResponseEntity.ok(stockService.getStocksByYearFromTo(fromDate, toDate));
   }
 

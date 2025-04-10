@@ -9,7 +9,6 @@ import org.zkollonay.stockmate.mapper.StockMapper;
 import org.zkollonay.stockmate.repository.StockRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
