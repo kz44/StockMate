@@ -17,6 +17,4 @@ public class InvestedDTO {
   private double amount;
 
   private double amountInHUF;
-
-
 }

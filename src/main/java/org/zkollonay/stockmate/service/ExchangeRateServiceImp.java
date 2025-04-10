@@ -17,7 +17,6 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
   private final double DEFAULT_AMOUNT = 1;
   private final String EXCHANGE_API_BASE_URL = "https://v6.exchangerate-api.com/v6/832fbb78b6d27cf4385b78d0/latest/";
 
-
   @Override
   public double fetchExchangeRate(String fromCurrency, String toCurrency) {
     try {
@@ -29,7 +28,6 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
       throw new RuntimeException("Failed to fetch exchange rate from external service", e);
     }
   }
-
 
   public ExchangeRateDTO getExchangeRateDetails(String fromCurrency, String toCurrency) {
     if (fromCurrency.equals(toCurrency)) {
@@ -48,14 +46,15 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
   }
 
   public ExchangeRateDTO convertToCurrency(double amount, String fromCurrency, String toCurrency) {
-    double convertedAmount = 0;
+    double rate = 1;
+    double convertedAmount;
 
     if (fromCurrency.equals(toCurrency)) {
       convertedAmount = amount;
+    } else {
+      rate = fetchExchangeRate(fromCurrency, toCurrency);
+      convertedAmount = amount * rate;
     }
-
-    double rate = fetchExchangeRate(fromCurrency, toCurrency); // Get the exchange rate
-    convertedAmount = amount * rate; // Get the converted amount
 
     return ExchangeRateDTO.builder()
         .fromCurrency(fromCurrency)

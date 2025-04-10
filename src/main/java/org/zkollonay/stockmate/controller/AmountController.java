@@ -17,14 +17,10 @@ public class AmountController {
 
   private final AmountService amountService;
 
-  /**
-   * Get total investment amount in the given currency -> InvestmentDTO
-   */
   @GetMapping("/total-investment-currency")
   public ResponseEntity<InvestedDTO> getTotalInvestmentAmountByCurrency(@RequestParam Currency currency) {
     return ResponseEntity.ok(amountService.getTotalInvestmentAmountByCurrency(currency));
   }
-
 
   @GetMapping("/total-investment")
   public ResponseEntity<InvestedDTO> getTotalInvestmentAmount() {
