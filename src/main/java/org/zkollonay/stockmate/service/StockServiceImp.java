@@ -1,8 +1,9 @@
 package org.zkollonay.stockmate.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.zkollonay.stockmate.DTO.NewStockDTO;
+import org.zkollonay.stockmate.DTO.FullStockDTO;
 import org.zkollonay.stockmate.DTO.StockDTO;
 import org.zkollonay.stockmate.domain.Stock;
 import org.zkollonay.stockmate.mapper.StockMapper;
@@ -10,7 +11,7 @@ import org.zkollonay.stockmate.repository.StockRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,59 +19,36 @@ public class StockServiceImp implements StockService {
 
   private final StockRepository stockRepository;
   private final StockMapper stockMapper;
-  private final ExchangeRateService exchangeRateService;
 
 
   @Override
-  public NewStockDTO addNewStock(NewStockDTO newStockDTO) {
-    Stock stock = stockMapper.toEntity(newStockDTO);
+  public FullStockDTO addNewStock(FullStockDTO fullStockDTO) {
+    Stock stock = stockMapper.toEntity(fullStockDTO);
     stockRepository.save(stock);
     return stockMapper.toNewDTO(stock);
   }
 
   @Override
-  public List<NewStockDTO> getAllStocks() {
-    return stockRepository.findAll()
-        .stream()
-        .map(stockMapper::toNewDTO)
-        .collect(Collectors.toList());
+  public List<FullStockDTO> getAllStocks() {
+    return stockRepository.findAll().stream().map(stockMapper::toNewDTO).toList();
   }
 
   @Override
   public List<StockDTO> getSumStocks() {
-    List<Object[]> results = stockRepository.getStockSummary();
-
-    return results.stream()
-        .map(row -> new StockDTO(
-            (String) row[1],  // name
-            (String) row[0],  // stockIdentifier
-            ((Number) row[2]).doubleValue(), // amount (összegzett érték)
-            (String) row[3]   // description
-        ))
-        .toList();
+    return stockRepository.getStockSummary();
   }
 
   @Override
-  public List<NewStockDTO> getStockByStocksIdentifier(String stockIdentifier) {
-    return stockRepository.getStocksByStockIdentifier(stockIdentifier).stream().map(stockMapper::toNewDTO).toList();
+  public List<FullStockDTO> getStockByStocksIdentifier(String stockIdentifier) {
+    return stockRepository.findByStockIdentifier(stockIdentifier).stream().map(stockMapper::toNewDTO).toList();
   }
 
 
   @Override
   public StockDTO getSumStockByStocksIdentifier(String stockIdentifier) {
-    Object result = stockRepository.getStockSummaryByStockIdentifier(stockIdentifier);
+    Optional<StockDTO> stockDTO = stockRepository.getStockSummaryByStockIdentifier(stockIdentifier);
 
-    if (result == null) {
-      throw new RuntimeException("No stock found with identifier: " + stockIdentifier);
-    }
-
-    Object[] row = (Object[]) result;
-    return new StockDTO(
-        (String) row[1],  // name
-        (String) row[0],  // stockIdentifier
-        ((Number) row[2]).doubleValue(), // amount (összegzett érték)
-        (String) row[3]   // description
-    );
+    return stockDTO.orElseThrow(() -> new EntityNotFoundException(stockIdentifier));
   }
 
   @Override
@@ -79,20 +57,21 @@ public class StockServiceImp implements StockService {
   }
 
   @Override
-  public NewStockDTO updateStockById(NewStockDTO newStockDTO, long stockID) {
-    Stock oldStock = stockRepository.findById(stockID).orElseThrow(() -> new RuntimeException("Stock not found with ID: " + stockID));
+  public FullStockDTO updateStockById(FullStockDTO fullStockDTO, long stockID) {
+    Stock oldStock = stockRepository.findById(stockID)
+        .orElseThrow(() -> new EntityNotFoundException("Stock not found with ID: " + stockID));
 
-    oldStock.setName(newStockDTO.getName());
-    oldStock.setStockIdentifier(newStockDTO.getStockIdentifier());
-    oldStock.setAmount(newStockDTO.getAmount());
-    oldStock.setSumDescription(newStockDTO.getSumDescription());
-    oldStock.setFullDescription(newStockDTO.getFullDescription());
-    oldStock.setTradingVenue(newStockDTO.getTradingVenue());
-    oldStock.setPurchaseDate(newStockDTO.getPurchaseDate());
-    oldStock.setPurchasePricePerPiece(newStockDTO.getPurchasePricePerPiece());
-    oldStock.setPurchasePriceTotal(newStockDTO.getPurchasePriceTotal());
-    oldStock.setCurrency(newStockDTO.getCurrency());
-    oldStock.setStockType(newStockDTO.getStockType());
+    oldStock.setName(fullStockDTO.getName());
+    oldStock.setStockIdentifier(fullStockDTO.getStockIdentifier());
+    oldStock.setAmount(fullStockDTO.getAmount());
+    oldStock.setSumDescription(fullStockDTO.getSumDescription());
+    oldStock.setFullDescription(fullStockDTO.getFullDescription());
+    oldStock.setTradingVenue(fullStockDTO.getTradingVenue());
+    oldStock.setPurchaseDate(fullStockDTO.getPurchaseDate());
+    oldStock.setPurchasePricePerPiece(fullStockDTO.getPurchasePricePerPiece());
+    oldStock.setPurchasePriceTotal(fullStockDTO.getPurchasePriceTotal());
+    oldStock.setCurrency(fullStockDTO.getCurrency());
+    oldStock.setStockType(fullStockDTO.getStockType());
     stockRepository.save(oldStock);
 
     return stockMapper.toNewDTO(oldStock);
@@ -104,17 +83,19 @@ public class StockServiceImp implements StockService {
   }
 
   @Override
-  public List<NewStockDTO> getStocksByYearFromTo(LocalDateTime from, LocalDateTime to) {
-    return stockRepository.findYears(from, to).stream().map(stockMapper::toNewDTO).toList();
+  public List<FullStockDTO> getStocksByYearFromTo(LocalDateTime from, LocalDateTime to) {
+    return stockRepository.findByPurchaseDateBetween(from, to).stream().map(stockMapper::toNewDTO).toList();
   }
 
   @Override
-  public String getFullDescriptionByStocksIdentifier(String stockIdentifier) {
-    return stockRepository.getFullDescription(stockIdentifier);
+  public String getFullDescriptionByStocksIdentifier(String stockIdentifier) throws Exception {
+    Optional<String> description = stockRepository.getFullDescription(stockIdentifier);
+
+    return description.orElseThrow(() -> new EntityNotFoundException("Full description not found for stock identifier: " + stockIdentifier));
   }
 
   @Override
-  public List<NewStockDTO> getStocksByYear(Integer year) {
+  public List<FullStockDTO> getStocksByYear(Integer year) {
     return stockRepository.findByPurchaseYear(year).stream().map(stockMapper::toNewDTO).toList();
   }
 }

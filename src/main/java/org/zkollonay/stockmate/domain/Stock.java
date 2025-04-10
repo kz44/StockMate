@@ -29,6 +29,7 @@ public class Stock {
   private String stockIdentifier;
 
   @NonNull
+  @Column(nullable = false)
   private Double amount;
 
   @NotBlank
@@ -43,8 +44,8 @@ public class Stock {
   private LocalDateTime purchaseDate;
 
   @NonNull
+  @Column(nullable = false)
   private Double purchasePricePerPiece;
-
 
   private Double purchasePriceTotal;
 

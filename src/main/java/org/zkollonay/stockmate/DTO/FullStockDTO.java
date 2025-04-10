@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class NewStockDTO {
+public class FullStockDTO {
 
   @NotBlank
   private String name;
@@ -31,7 +31,6 @@ public class NewStockDTO {
   @NotBlank
   private String fullDescription;
 
-  @Enumerated(EnumType.STRING)
   private TradingVenue tradingVenue;
 
   private LocalDateTime purchaseDate;
@@ -42,9 +41,7 @@ public class NewStockDTO {
   @NonNull
   private Double purchasePriceTotal;
 
-  @Enumerated(EnumType.STRING)
   private Currency currency;
 
-  @Enumerated(EnumType.STRING)
   private StockType stockType;
 }

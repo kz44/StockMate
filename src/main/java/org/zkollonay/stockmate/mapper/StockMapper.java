@@ -2,7 +2,7 @@ package org.zkollonay.stockmate.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.zkollonay.stockmate.DTO.NewStockDTO;
+import org.zkollonay.stockmate.DTO.FullStockDTO;
 import org.zkollonay.stockmate.DTO.StockDTO;
 import org.zkollonay.stockmate.domain.Stock;
 
@@ -10,8 +10,8 @@ import org.zkollonay.stockmate.domain.Stock;
 @RequiredArgsConstructor
 public class StockMapper {
 
-  public NewStockDTO toNewDTO(Stock stock) {
-    return NewStockDTO.builder()
+  public FullStockDTO toNewDTO(Stock stock) {
+    return FullStockDTO.builder()
         .name(stock.getName())
         .stockIdentifier(stock.getStockIdentifier())
         .amount(stock.getAmount())
@@ -27,19 +27,19 @@ public class StockMapper {
   }
 
 
-  public Stock toEntity(NewStockDTO newStockDTO) {
+  public Stock toEntity(FullStockDTO fullStockDTO) {
     return Stock.builder()
-        .name(newStockDTO.getName())
-        .stockIdentifier(newStockDTO.getStockIdentifier())
-        .amount(newStockDTO.getAmount())
-        .sumDescription(newStockDTO.getSumDescription())
-        .fullDescription(newStockDTO.getFullDescription())
-        .tradingVenue(newStockDTO.getTradingVenue())
-        .purchaseDate(newStockDTO.getPurchaseDate())
-        .purchasePricePerPiece(newStockDTO.getPurchasePricePerPiece())
-        .purchasePriceTotal(newStockDTO.getPurchasePriceTotal())
-        .currency(newStockDTO.getCurrency())
-        .stockType(newStockDTO.getStockType())
+        .name(fullStockDTO.getName())
+        .stockIdentifier(fullStockDTO.getStockIdentifier())
+        .amount(fullStockDTO.getAmount())
+        .sumDescription(fullStockDTO.getSumDescription())
+        .fullDescription(fullStockDTO.getFullDescription())
+        .tradingVenue(fullStockDTO.getTradingVenue())
+        .purchaseDate(fullStockDTO.getPurchaseDate())
+        .purchasePricePerPiece(fullStockDTO.getPurchasePricePerPiece())
+        .purchasePriceTotal(fullStockDTO.getPurchasePriceTotal())
+        .currency(fullStockDTO.getCurrency())
+        .stockType(fullStockDTO.getStockType())
         .build();
   }
 
