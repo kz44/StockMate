@@ -1,9 +1,9 @@
 package org.zkollonay.stockmate.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Positive;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -13,13 +13,18 @@ import java.math.BigDecimal;
 @Builder
 public class ExchangeRateDTO {
 
+  @Enumerated(EnumType.STRING)
   private String fromCurrency;
 
+  @Enumerated(EnumType.STRING)
   private String toCurrency;
 
+  @Positive
   private BigDecimal exchangeRate;
 
+  @NonNull
   private BigDecimal originalAmount;
 
+  @NonNull
   private BigDecimal convertedAmount;
 }

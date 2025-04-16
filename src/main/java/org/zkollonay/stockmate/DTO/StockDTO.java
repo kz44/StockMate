@@ -1,6 +1,7 @@
 package org.zkollonay.stockmate.DTO;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ public class StockDTO {
   private String stockIdentifier;
 
   @NonNull
+  @Positive
   private BigDecimal amount;
 
   @NotBlank

@@ -2,6 +2,7 @@ package org.zkollonay.stockmate.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import org.zkollonay.stockmate.ENUM.Currency;
 import org.zkollonay.stockmate.ENUM.StockType;
@@ -31,6 +32,7 @@ public class Stock {
 
   @NonNull
   @Column(nullable = false)
+  @Positive
   private BigDecimal amount;
 
   @NotBlank
@@ -46,8 +48,10 @@ public class Stock {
 
   @NonNull
   @Column(nullable = false)
+  @Positive
   private BigDecimal purchasePricePerPiece;
 
+  @Positive
   private BigDecimal purchasePriceTotal;
 
   @Enumerated(EnumType.STRING)

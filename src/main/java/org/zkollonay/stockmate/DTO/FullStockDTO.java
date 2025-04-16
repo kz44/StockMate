@@ -1,6 +1,10 @@
 package org.zkollonay.stockmate.DTO;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import org.zkollonay.stockmate.ENUM.Currency;
 import org.zkollonay.stockmate.ENUM.StockType;
@@ -22,6 +26,8 @@ public class FullStockDTO {
   private String stockIdentifier;
 
   @NonNull
+  @Column(nullable = false)
+  @Positive
   private BigDecimal amount;
 
   @NotBlank
@@ -30,17 +36,22 @@ public class FullStockDTO {
   @NotBlank
   private String fullDescription;
 
+  @Enumerated(EnumType.STRING)
   private TradingVenue tradingVenue;
 
   private LocalDateTime purchaseDate;
 
   @NonNull
+  @Column(nullable = false)
+  @Positive
   private BigDecimal purchasePricePerPiece;
 
-  @NonNull
+  @Positive
   private BigDecimal purchasePriceTotal;
 
+  @Enumerated(EnumType.STRING)
   private Currency currency;
 
+  @Enumerated(EnumType.STRING)
   private StockType stockType;
 }
