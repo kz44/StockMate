@@ -20,14 +20,23 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
 
   private final ObjectMapper jsonMapper;
 
+  private final BigDecimal DEFAULT_AMOUNT = BigDecimal.ONE;
+
   @Value("${exchange.api.key}")
   private String apiKey;
 
   @Value("${exchange.api.base-url}")
   private String baseUrl;
 
-  private final BigDecimal DEFAULT_AMOUNT = BigDecimal.ONE;
 
+  /**
+   * Fetches the exchange rate between two currencies from an external API.
+   *
+   * @param fromCurrency The source currency code.
+   * @param toCurrency   The target currency code.
+   * @return The exchange rate as a BigDecimal.
+   * @throws RuntimeException If the exchange rate cannot be fetched or is not found.
+   */
   @Override
   public BigDecimal fetchExchangeRate(String fromCurrency, String toCurrency) {
     try {
@@ -51,6 +60,15 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
     }
   }
 
+
+  /**
+   * Retrieves the exchange rate details for a default amount between two currencies.
+   *
+   * @param fromCurrency The source currency code.
+   * @param toCurrency   The target currency code.
+   * @return An ExchangeRateDTO containing the exchange rate and converted amount.
+   * @throws IllegalArgumentException If the source and target currencies are the same.
+   */
   public ExchangeRateDTO getExchangeRateDetails(String fromCurrency, String toCurrency) {
     if (fromCurrency.equals(toCurrency)) {
       throw new IllegalArgumentException("fromCurrency and toCurrency are both equal");
@@ -67,6 +85,15 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
         .build();
   }
 
+
+  /**
+   * Converts a given amount from one currency to another.
+   *
+   * @param amount       The amount to convert.
+   * @param fromCurrency The source currency code.
+   * @param toCurrency   The target currency code.
+   * @return An ExchangeRateDTO containing the exchange rate and the converted amount.
+   */
   public ExchangeRateDTO convertToCurrency(BigDecimal amount, String fromCurrency, String toCurrency) {
     BigDecimal rate = BigDecimal.ONE;
     BigDecimal convertedAmount;
