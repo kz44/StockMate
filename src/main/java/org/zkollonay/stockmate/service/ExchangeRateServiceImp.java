@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.zkollonay.stockmate.DTO.ExchangeRateDTO;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 
@@ -14,7 +16,8 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class ExchangeRateServiceImp implements ExchangeRateService {
 
-  private final RestTemplate restClient;
+  private final WebClient restClient;
+
   private final ObjectMapper jsonMapper;
 
   @Value("${exchange.api.key}")
@@ -30,9 +33,16 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
   public BigDecimal fetchExchangeRate(String fromCurrency, String toCurrency) {
     try {
       String requestApiUrl = baseUrl + apiKey + "/latest/" + fromCurrency;
-      String apiResponse = restClient.getForObject(requestApiUrl, String.class);  // Get API answers
-      JsonNode responseJson = jsonMapper.readTree(apiResponse); // Convert to JSON
-      BigDecimal rate = responseJson.path("conversion_rates").path(toCurrency).decimalValue(); // -> Read the current exchange rate
+      Mono<String> apiResponseMono = restClient.get()
+          .uri(requestApiUrl)
+          .accept(MediaType.APPLICATION_JSON)
+          .retrieve()
+          .bodyToMono(String.class);
+
+      String apiResponse = apiResponseMono.block();
+
+      JsonNode responseJson = jsonMapper.readTree(apiResponse);
+      BigDecimal rate = responseJson.path("conversion_rates").path(toCurrency).decimalValue();
       if (rate == null) {
         throw new RuntimeException("Exchange rate not found for " + fromCurrency + " to " + toCurrency);
       }
