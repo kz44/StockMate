@@ -11,6 +11,7 @@ import org.zkollonay.stockmate.ENUM.TradingVenue;
 import org.zkollonay.stockmate.domain.Stock;
 import org.zkollonay.stockmate.mapper.StockMapper;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,13 +36,13 @@ public class StockMapperTest {
         .id(1L)
         .name("Apple Inc.")
         .stockIdentifier("AAPL")
-        .amount(1.0) // Double típus
+        .amount(BigDecimal.valueOf(2.0)) // Double típus
         .sumDescription("Tech giant shares")
         .fullDescription("Detailed description about Apple shares purchase.")
         .tradingVenue(TradingVenue.NASDAQ)
         .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0)) // LocalDateTime
-        .purchasePricePerPiece(175.50)
-        .purchasePriceTotal(175.50)
+        .purchasePricePerPiece(BigDecimal.valueOf(175.50))
+        .purchasePriceTotal(BigDecimal.valueOf(175.50))
         .currency(Currency.USD)
         .stockType(StockType.STOCK)
         .build();
@@ -65,7 +66,6 @@ public class StockMapperTest {
   }
 
 
-
   @Test
   @DisplayName("Should correctly map Stock entity to FullStockDTO")
   void shouldMapFullStockDTOToStock() {
@@ -74,13 +74,13 @@ public class StockMapperTest {
     FullStockDTO fullStockDTO = FullStockDTO.builder()
         .name("Apple Inc.")
         .stockIdentifier("AAPL")
-        .amount(2.0)
+        .amount(BigDecimal.valueOf(2.0))
         .sumDescription("Tech giant shares")
         .fullDescription("Detailed description about Apple shares purchase.")
         .tradingVenue(TradingVenue.NASDAQ)
         .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0))
-        .purchasePricePerPiece(20.10)
-        .purchasePriceTotal(40.20)
+        .purchasePricePerPiece(BigDecimal.valueOf(20.10))
+        .purchasePriceTotal(BigDecimal.valueOf(40.20))
         .currency(Currency.USD)
         .stockType(StockType.STOCK)
         .build();
@@ -112,14 +112,14 @@ public class StockMapperTest {
     Stock stockEntity = Stock.builder()
         .name("Tesla Inc.")
         .stockIdentifier("TSLA")
-        .amount(20.0) // Double
+        .amount(BigDecimal.valueOf(20.0)) // Double
         .sumDescription("Electric vehicle maker")
         .fullDescription("Detailed description...")
         .purchaseDate(LocalDateTime.now())
         .currency(Currency.USD)
         .stockType(StockType.STOCK)
         .tradingVenue(TradingVenue.NASDAQ)
-        .purchasePricePerPiece(180.0)
+        .purchasePricePerPiece(BigDecimal.valueOf(180.0))
         .build();
 
     // Act
@@ -134,10 +134,60 @@ public class StockMapperTest {
   }
 
   @Test
+  @DisplayName("Should correctly update Stock oldStock entity to from FullStockDTO fullStockDTO")
+  void shouldUpdateStockFromFullStockDTO() {
+
+    // Arrange
+    FullStockDTO fullStockDTO = FullStockDTO.builder()
+        .name("Apple Inc.")
+        .stockIdentifier("AAPL")
+        .amount(BigDecimal.valueOf(2.0))
+        .sumDescription("Tech giant shares")
+        .fullDescription("Detailed description about Apple shares purchase.")
+        .tradingVenue(TradingVenue.NASDAQ)
+        .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0))
+        .purchasePricePerPiece(BigDecimal.valueOf(20.10))
+        .purchasePriceTotal(BigDecimal.valueOf(40.20))
+        .currency(Currency.USD)
+        .stockType(StockType.STOCK)
+        .build();
+
+    Stock oldStock = Stock.builder()
+        .name("Apple Inc.")
+        .stockIdentifier("AAPL")
+        .amount(BigDecimal.valueOf(2.0))
+        .sumDescription("Tech giant shares")
+        .fullDescription("Detailed description about Apple shares purchase.")
+        .tradingVenue(TradingVenue.NASDAQ)
+        .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0))
+        .purchasePricePerPiece(BigDecimal.valueOf(20.10))
+        .purchasePriceTotal(BigDecimal.valueOf(40.20))
+        .currency(Currency.USD)
+        .stockType(StockType.STOCK)
+        .build();
+
+    // Act
+    stockMapper.updateStockFromFullStockDTO(fullStockDTO, oldStock);
+
+    // Assert
+    assertThat(oldStock.getName()).isEqualTo(fullStockDTO.getName());
+    assertThat(oldStock.getStockIdentifier()).isEqualTo(fullStockDTO.getStockIdentifier());
+    assertThat(oldStock.getAmount()).isEqualTo(fullStockDTO.getAmount());
+    assertThat(oldStock.getSumDescription()).isEqualTo(fullStockDTO.getSumDescription());
+    assertThat(oldStock.getFullDescription()).isEqualTo(fullStockDTO.getFullDescription());
+    assertThat(oldStock.getTradingVenue()).isEqualTo(fullStockDTO.getTradingVenue());
+    assertThat(oldStock.getPurchaseDate()).isEqualTo(fullStockDTO.getPurchaseDate());
+    assertThat(oldStock.getPurchasePricePerPiece()).isEqualTo(fullStockDTO.getPurchasePricePerPiece());
+    assertThat(oldStock.getCurrency()).isEqualTo(fullStockDTO.getCurrency());
+    assertThat(oldStock.getStockType()).isEqualTo(fullStockDTO.getStockType());
+  }
+
+  @Test
   @DisplayName("Should handle null input by throwing NullPointerException")
   void shouldHandleNullInput() {
     assertThrows(NullPointerException.class, () -> stockMapper.toNewDTO(null));
     assertThrows(NullPointerException.class, () -> stockMapper.toEntity(null));
     assertThrows(NullPointerException.class, () -> stockMapper.toDTO(null));
+    assertThrows(NullPointerException.class, () -> stockMapper.updateStockFromFullStockDTO(null, null));
   }
 }
