@@ -60,6 +60,10 @@ public class Stock {
   @Enumerated(EnumType.STRING)
   private StockType stockType;
 
+
+  /**
+   * If user don't give purchasePriceTotal parameter, automatically calculate it
+   */
   @PrePersist
   @PreUpdate
   public void calculatePurchasePriceTotal() {
