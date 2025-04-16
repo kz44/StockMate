@@ -27,7 +27,6 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
   private String baseUrl;
 
   private final BigDecimal DEFAULT_AMOUNT = BigDecimal.ONE;
-  private final String EXCHANGE_API_BASE_URL = "https://v6.exchangerate-api.com/v6/832fbb78b6d27cf4385b78d0/latest/";
 
   @Override
   public BigDecimal fetchExchangeRate(String fromCurrency, String toCurrency) {
