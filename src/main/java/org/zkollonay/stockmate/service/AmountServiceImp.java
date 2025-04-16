@@ -18,6 +18,12 @@ public class AmountServiceImp implements AmountService {
   private final StockRepository stockRepository;
   private final ExchangeRateService exchangeRateService;
 
+  /**
+   * Calculates the total investment amount for a specific currency.
+   *
+   * @param currency The currency to calculate the total investment for.
+   * @return An InvestedDTO containing the total investment amount in the specified currency and its equivalent in HUF.
+   */
   @Override
   public InvestedDTO getTotalInvestmentAmountByCurrency(Currency currency) {
     List<Stock> stocks = stockRepository.findAllByCurrency(currency);
@@ -36,6 +42,12 @@ public class AmountServiceImp implements AmountService {
         .build();
   }
 
+
+  /**
+   * Calculates the total investment amount across all currencies, converted to HUF.
+   *
+   * @return An InvestedDTO containing the total investment amount in HUF.
+   */
   @Override
   public InvestedDTO getTotalInvestmentAmount() {
     InvestedDTO totalInUSD = getTotalInvestmentAmountByCurrency(Currency.USD);
