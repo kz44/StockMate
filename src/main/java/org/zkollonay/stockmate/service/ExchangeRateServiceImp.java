@@ -3,6 +3,7 @@ package org.zkollonay.stockmate.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.zkollonay.stockmate.DTO.ExchangeRateDTO;
@@ -16,13 +17,19 @@ public class ExchangeRateServiceImp implements ExchangeRateService {
   private final RestTemplate restClient;
   private final ObjectMapper jsonMapper;
 
+  @Value("${exchange.api.key}")
+  private String apiKey;
+
+  @Value("${exchange.api.base-url}")
+  private String baseUrl;
+
   private final BigDecimal DEFAULT_AMOUNT = BigDecimal.ONE;
   private final String EXCHANGE_API_BASE_URL = "https://v6.exchangerate-api.com/v6/832fbb78b6d27cf4385b78d0/latest/";
 
   @Override
   public BigDecimal fetchExchangeRate(String fromCurrency, String toCurrency) {
     try {
-      String requestApiUrl = EXCHANGE_API_BASE_URL + fromCurrency;
+      String requestApiUrl = baseUrl + apiKey + "/latest/" + fromCurrency;
       String apiResponse = restClient.getForObject(requestApiUrl, String.class);  // Get API answers
       JsonNode responseJson = jsonMapper.readTree(apiResponse); // Convert to JSON
       BigDecimal rate = responseJson.path("conversion_rates").path(toCurrency).decimalValue(); // -> Read the current exchange rate

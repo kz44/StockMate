@@ -17,6 +17,11 @@ spring:
       ddl-auto: update
     show-sql: true
 
+exchange:
+  api:
+    key: 832fbb78b6d27cf4385b78d0
+    base-url: https://v6.exchangerate-api.com/v6/
+
 logging:
   level:
     org:
