@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.zkollonay.stockmate.ENUM.Currency;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +16,7 @@ public class InvestedDTO {
 
   private Currency currency;
 
-  private double amount;
+  private BigDecimal amount;
 
-  private double amountInHUF;
+  private BigDecimal amountInHUF;
 }

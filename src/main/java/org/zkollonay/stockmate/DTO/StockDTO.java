@@ -3,6 +3,8 @@ package org.zkollonay.stockmate.DTO;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 
 @Data
 @Builder
@@ -17,7 +19,7 @@ public class StockDTO {
   private String stockIdentifier;
 
   @NonNull
-  private Double amount;
+  private BigDecimal amount;
 
   @NotBlank
   private String description;

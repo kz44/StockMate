@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zkollonay.stockmate.DTO.ExchangeRateDTO;
 import org.zkollonay.stockmate.service.ExchangeRateService;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/exchanges")
@@ -24,7 +26,7 @@ public class ExchangeController {
 
   @GetMapping("/convertTo")
   public ResponseEntity<ExchangeRateDTO> convertToCurrency(
-      @RequestParam double amount,
+      @RequestParam BigDecimal amount,
       @RequestParam String fromCurrency,
       @RequestParam String toCurrency) {
     return ResponseEntity.ok(exchangeRateService.convertToCurrency(amount, fromCurrency, toCurrency));

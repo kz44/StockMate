@@ -6,6 +6,7 @@ import org.zkollonay.stockmate.ENUM.Currency;
 import org.zkollonay.stockmate.ENUM.StockType;
 import org.zkollonay.stockmate.ENUM.TradingVenue;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,7 +22,7 @@ public class FullStockDTO {
   private String stockIdentifier;
 
   @NonNull
-  private Double amount;
+  private BigDecimal amount;
 
   @NotBlank
   private String sumDescription;
@@ -34,10 +35,10 @@ public class FullStockDTO {
   private LocalDateTime purchaseDate;
 
   @NonNull
-  private Double purchasePricePerPiece;
+  private BigDecimal purchasePricePerPiece;
 
   @NonNull
-  private Double purchasePriceTotal;
+  private BigDecimal purchasePriceTotal;
 
   private Currency currency;
 

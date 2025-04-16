@@ -7,6 +7,8 @@ import org.zkollonay.stockmate.ENUM.Currency;
 import org.zkollonay.stockmate.domain.Stock;
 import org.zkollonay.stockmate.repository.StockRepository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -19,13 +21,13 @@ public class AmountServiceImp implements AmountService {
   @Override
   public InvestedDTO getTotalInvestmentAmountByCurrency(Currency currency) {
     List<Stock> stocks = stockRepository.findAllByCurrency(currency);
-    double totalInvestmentAmount = 0;
+    BigDecimal totalInvestmentAmount = BigDecimal.ZERO;
 
     for (Stock stock : stocks) {
-      totalInvestmentAmount += stock.getPurchasePriceTotal();
+      totalInvestmentAmount = totalInvestmentAmount.add(stock.getPurchasePriceTotal());
     }
 
-    long roundedAmount = Math.round(totalInvestmentAmount);
+    BigDecimal roundedAmount = totalInvestmentAmount.setScale(2, RoundingMode.HALF_UP);
 
     return InvestedDTO.builder()
         .currency(currency)
@@ -40,7 +42,9 @@ public class AmountServiceImp implements AmountService {
     InvestedDTO totalInEUR = getTotalInvestmentAmountByCurrency(Currency.EUR);
     InvestedDTO totalInHUF = getTotalInvestmentAmountByCurrency(Currency.HUF);
 
-    double totalInvestmentAmount = totalInUSD.getAmountInHUF() + totalInEUR.getAmountInHUF() + totalInHUF.getAmountInHUF();
+    BigDecimal totalInvestmentAmount = totalInUSD.getAmountInHUF()
+        .add(totalInEUR.getAmountInHUF())
+        .add(totalInHUF.getAmountInHUF());
 
     return InvestedDTO.builder()
         .amountInHUF(totalInvestmentAmount)

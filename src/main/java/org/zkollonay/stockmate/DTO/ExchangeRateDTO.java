@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,9 +17,9 @@ public class ExchangeRateDTO {
 
   private String toCurrency;
 
-  private double exchangeRate;
+  private BigDecimal exchangeRate;
 
-  private double originalAmount;
+  private BigDecimal originalAmount;
 
-  private double convertedAmount;
+  private BigDecimal convertedAmount;
 }

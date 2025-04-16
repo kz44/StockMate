@@ -7,6 +7,7 @@ import org.zkollonay.stockmate.ENUM.Currency;
 import org.zkollonay.stockmate.ENUM.StockType;
 import org.zkollonay.stockmate.ENUM.TradingVenue;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,7 +31,7 @@ public class Stock {
 
   @NonNull
   @Column(nullable = false)
-  private Double amount;
+  private BigDecimal amount;
 
   @NotBlank
   private String sumDescription;
@@ -45,9 +46,9 @@ public class Stock {
 
   @NonNull
   @Column(nullable = false)
-  private Double purchasePricePerPiece;
+  private BigDecimal purchasePricePerPiece;
 
-  private Double purchasePriceTotal;
+  private BigDecimal purchasePriceTotal;
 
   @Enumerated(EnumType.STRING)
   private Currency currency;
@@ -58,7 +59,7 @@ public class Stock {
   @PrePersist
   public void calculatePurchasePriceTotal() {
     if (purchasePriceTotal == null) {
-      purchasePriceTotal = purchasePricePerPiece * amount;
+      purchasePriceTotal = purchasePricePerPiece.multiply(amount);
     }
   }
 }
