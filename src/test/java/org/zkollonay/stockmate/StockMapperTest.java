@@ -153,15 +153,15 @@ public class StockMapperTest {
         .build();
 
     Stock oldStock = Stock.builder()
-        .name("Apple Inc.")
-        .stockIdentifier("AAPL")
-        .amount(BigDecimal.valueOf(2.0))
+        .name("Tesla.")
+        .stockIdentifier("TSLA")
+        .amount(BigDecimal.valueOf(4.0))
         .sumDescription("Tech giant shares")
         .fullDescription("Detailed description about Apple shares purchase.")
         .tradingVenue(TradingVenue.NASDAQ)
         .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0))
-        .purchasePricePerPiece(BigDecimal.valueOf(20.10))
-        .purchasePriceTotal(BigDecimal.valueOf(40.20))
+        .purchasePricePerPiece(BigDecimal.valueOf(25.00))
+        .purchasePriceTotal(BigDecimal.valueOf(100.00))
         .currency(Currency.USD)
         .stockType(StockType.STOCK)
         .build();
