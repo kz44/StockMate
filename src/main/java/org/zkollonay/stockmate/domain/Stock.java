@@ -57,6 +57,7 @@ public class Stock {
   private StockType stockType;
 
   @PrePersist
+  @PreUpdate
   public void calculatePurchasePriceTotal() {
     if (purchasePriceTotal == null) {
       purchasePriceTotal = purchasePricePerPiece.multiply(amount);
