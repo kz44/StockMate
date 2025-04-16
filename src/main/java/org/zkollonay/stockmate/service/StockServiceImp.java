@@ -63,18 +63,8 @@ public class StockServiceImp implements StockService {
     Stock oldStock = stockRepository.findById(stockID)
         .orElseThrow(() -> new EntityNotFoundException("Stock not found with ID: " + stockID));
 
-    oldStock.setName(fullStockDTO.getName());
-    oldStock.setStockIdentifier(fullStockDTO.getStockIdentifier());
-    oldStock.setAmount(fullStockDTO.getAmount());
-    oldStock.setSumDescription(fullStockDTO.getSumDescription());
-    oldStock.setFullDescription(fullStockDTO.getFullDescription());
-    oldStock.setTradingVenue(fullStockDTO.getTradingVenue());
-    oldStock.setPurchaseDate(fullStockDTO.getPurchaseDate());
-    oldStock.setPurchasePricePerPiece(fullStockDTO.getPurchasePricePerPiece());
-    oldStock.setCurrency(fullStockDTO.getCurrency());
-    oldStock.setStockType(fullStockDTO.getStockType());
+    stockMapper.updateStockFromFullStockDTO(fullStockDTO, oldStock);
     stockRepository.save(oldStock);
-
     return stockMapper.toNewDTO(oldStock);
   }
 

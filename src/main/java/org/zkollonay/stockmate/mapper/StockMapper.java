@@ -53,4 +53,18 @@ public class StockMapper {
         .build();
   }
 
+
+  public void updateStockFromFullStockDTO(FullStockDTO fullStockDTO, Stock oldStock){
+    oldStock.setName(fullStockDTO.getName());
+    oldStock.setStockIdentifier(fullStockDTO.getStockIdentifier());
+    oldStock.setAmount(fullStockDTO.getAmount());
+    oldStock.setSumDescription(fullStockDTO.getSumDescription());
+    oldStock.setFullDescription(fullStockDTO.getFullDescription());
+    oldStock.setTradingVenue(fullStockDTO.getTradingVenue());
+    oldStock.setPurchaseDate(fullStockDTO.getPurchaseDate());
+    oldStock.setPurchasePricePerPiece(fullStockDTO.getPurchasePricePerPiece());
+    oldStock.setCurrency(fullStockDTO.getCurrency());
+    oldStock.setStockType(fullStockDTO.getStockType());
+  }
+
 }
