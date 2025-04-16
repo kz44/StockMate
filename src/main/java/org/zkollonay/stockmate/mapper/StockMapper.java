@@ -10,6 +10,12 @@ import org.zkollonay.stockmate.domain.Stock;
 @RequiredArgsConstructor
 public class StockMapper {
 
+  /**
+   * Converts a Stock entity to a new FullStockDTO.
+   *
+   * @param stock The Stock entity to convert.
+   * @return The created FullStockDTO.
+   */
   public FullStockDTO toNewDTO(Stock stock) {
     return FullStockDTO.builder()
         .name(stock.getName())
@@ -27,6 +33,12 @@ public class StockMapper {
   }
 
 
+  /**
+   * Converts a FullStockDTO to a Stock entity.
+   *
+   * @param fullStockDTO The FullStockDTO to convert.
+   * @return The created Stock entity.
+   */
   public Stock toEntity(FullStockDTO fullStockDTO) {
     return Stock.builder()
         .name(fullStockDTO.getName())
@@ -44,6 +56,12 @@ public class StockMapper {
   }
 
 
+  /**
+   * Converts a Stock entity to a StockDTO.
+   *
+   * @param stock The Stock entity to convert.
+   * @return The created StockDTO.
+   */
   public StockDTO toDTO(Stock stock) {
     return StockDTO.builder()
         .name(stock.getName())
@@ -54,7 +72,13 @@ public class StockMapper {
   }
 
 
-  public void updateStockFromFullStockDTO(FullStockDTO fullStockDTO, Stock oldStock){
+  /**
+   * Updates an existing Stock entity with data from a FullStockDTO.
+   *
+   * @param fullStockDTO The FullStockDTO containing the update data.
+   * @param oldStock     The Stock entity to update.
+   */
+  public void updateStockFromFullStockDTO(FullStockDTO fullStockDTO, Stock oldStock) {
     oldStock.setName(fullStockDTO.getName());
     oldStock.setStockIdentifier(fullStockDTO.getStockIdentifier());
     oldStock.setAmount(fullStockDTO.getAmount());

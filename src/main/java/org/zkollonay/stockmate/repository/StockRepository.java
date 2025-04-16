@@ -16,6 +16,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
   /**
    * Retrieves a summary of stocks, grouping by stock identifier.
+   *
    * @return A list of StockDTO objects representing the stock summary.
    */
   @Query("SELECT NEW org.zkollonay.stockmate.DTO.StockDTO(" +
@@ -26,6 +27,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
   /**
    * Finds all stocks with the given stock identifier.
+   *
    * @param stockIdentifier The identifier of the stock.
    * @return A list of Stock objects with the specified identifier.
    */
@@ -34,6 +36,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
   /**
    * Retrieves a summary of a specific stock based on its identifier.
+   *
    * @param stockIdentifier The identifier of the stock.
    * @return An Optional containing the StockDTO representing the stock summary, or an empty Optional if not found.
    */
@@ -45,6 +48,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
   /**
    * Finds stocks that match the given filter in name, summary description, or stock identifier.
+   *
    * @param filter The filter string to search for.
    * @return A list of Stock objects that match the filter.
    */
@@ -58,8 +62,9 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
   /**
    * Finds stocks purchased within the specified date range.
+   *
    * @param startDate The starting date of the range (inclusive).
-   * @param endDate The ending date of the range (inclusive).
+   * @param endDate   The ending date of the range (inclusive).
    * @return A list of Stock objects purchased within the given period.
    */
   @Query("SELECT s FROM Stock s WHERE s.purchaseDate BETWEEN :startDate AND :endDate")
@@ -67,6 +72,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
   /**
    * Retrieves the distinct full description of a stock based on its identifier.
+   *
    * @param stockIdentifier The identifier of the stock.
    * @return An Optional containing the full description, or an empty Optional if not found.
    */
@@ -76,6 +82,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
   /**
    * Finds all stocks with the given currency.
+   *
    * @param currency The currency of the stock.
    * @return A list of Stock objects with the specified currency.
    */
@@ -84,6 +91,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
   /**
    * Finds all stocks purchased in the given year.
+   *
    * @param year The year of purchase.
    * @return A list of Stock objects purchased in the specified year.
    */
