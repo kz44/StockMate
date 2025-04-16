@@ -19,8 +19,8 @@ spring:
 
 exchange:
   api:
-    key: 832fbb78b6d27cf4385b78d0
-    base-url: https://v6.exchangerate-api.com/v6/
+    key: 832fbb78b6d27cf4385b78d0 # API key for the exchange rate service
+    base-url: https://v6.exchangerate-api.com/v6/ # Base URL for the exchange rate API
 
 logging:
   level:
