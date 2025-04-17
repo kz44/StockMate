@@ -1,4 +1,4 @@
-package org.zkollonay.stockmate;
+package org.zkollonay.stockmate.mapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +9,6 @@ import org.zkollonay.stockmate.ENUM.Currency;
 import org.zkollonay.stockmate.ENUM.StockType;
 import org.zkollonay.stockmate.ENUM.TradingVenue;
 import org.zkollonay.stockmate.domain.Stock;
-import org.zkollonay.stockmate.mapper.StockMapper;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,6 +26,8 @@ public class StockMapperTest {
     stockMapper = new StockMapper();
   }
 
+
+   // Creates a sample entity with predefined values for testing purposes. -> Apple
   private Stock createSampleStock() {
     return Stock.builder()
         .name("Apple Inc.")
@@ -43,6 +44,7 @@ public class StockMapperTest {
         .build();
   }
 
+  // Creates a sample entity with predefined values for testing purposes. -> Google
   private Stock createSampleStock2() {
     return Stock.builder()
         .name("Google LLC")
@@ -59,6 +61,7 @@ public class StockMapperTest {
         .build();
   }
 
+  // Creates a sample FullStockDTO with predefined values for testing purposes. -> Google
   private FullStockDTO createSampleFullStockDTO2() {
     return FullStockDTO.builder()
         .name("Google LLC")
@@ -75,6 +78,7 @@ public class StockMapperTest {
         .build();
   }
 
+  // Creates a sample StockDTO with predefined values for testing purposes. -> Google
   private StockDTO createSampleStockDTO2() {
     return StockDTO.builder()
         .name("Google LLC")
@@ -84,6 +88,7 @@ public class StockMapperTest {
         .build();
   }
 
+  // stockMapper.toNewDTO
   @Test
   @DisplayName("Should correctly map Stock entity to FullStockDTO")
   void shouldMapStockToFullStockDTO() {
@@ -91,9 +96,9 @@ public class StockMapperTest {
     FullStockDTO fullStockDTO = createSampleFullStockDTO2();
     FullStockDTO resultDTO = stockMapper.toNewDTO(stockEntity);
     assertThat(resultDTO).usingRecursiveComparison().isEqualTo(fullStockDTO);
-
   }
 
+  // stockMapper.toEntity
   @Test
   @DisplayName("Should correctly map FullStockDTO to Stock entity")
   void shouldMapFullStockDTOToStock() {
@@ -103,6 +108,7 @@ public class StockMapperTest {
     assertThat(resultEntity).usingRecursiveComparison().isEqualTo(stockEntity);
   }
 
+  // stockMapper.toDTO
   @Test
   @DisplayName("Should correctly map Stock entity to StockDTO")
   void shouldMapStockToStockDTO() {
@@ -112,6 +118,7 @@ public class StockMapperTest {
     assertThat(resultDTO).usingRecursiveComparison().isEqualTo(stockDTO);
   }
 
+  // stockMapper.updateStockFromFullStockDTO
   @Test
   @DisplayName("Should correctly update Stock entity from FullStockDTO")
   void shouldUpdateStockFromFullStockDTO() {
@@ -123,6 +130,7 @@ public class StockMapperTest {
         .isEqualTo(fullStockDTO);
   }
 
+  // stockMapper methods with null values
   @Test
   @DisplayName("Should handle null input by throwing NullPointerException")
   void shouldHandleNullInput() {
