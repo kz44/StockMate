@@ -87,6 +87,7 @@ public class StockMapper {
     oldStock.setTradingVenue(fullStockDTO.getTradingVenue());
     oldStock.setPurchaseDate(fullStockDTO.getPurchaseDate());
     oldStock.setPurchasePricePerPiece(fullStockDTO.getPurchasePricePerPiece());
+    oldStock.setPurchasePriceTotal(fullStockDTO.getPurchasePriceTotal());
     oldStock.setCurrency(fullStockDTO.getCurrency());
     oldStock.setStockType(fullStockDTO.getStockType());
   }

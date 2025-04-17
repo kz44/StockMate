@@ -27,159 +27,100 @@ public class StockMapperTest {
     stockMapper = new StockMapper();
   }
 
+  private Stock createSampleStock() {
+    return Stock.builder()
+        .name("Apple Inc.")
+        .stockIdentifier("AAPL")
+        .amount(BigDecimal.valueOf(2.0))
+        .sumDescription("Tech giant shares")
+        .fullDescription("Detailed description about Apple shares purchase.")
+        .tradingVenue(TradingVenue.NASDAQ)
+        .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0))
+        .purchasePricePerPiece(BigDecimal.valueOf(175.50))
+        .purchasePriceTotal(BigDecimal.valueOf(351.00))
+        .currency(Currency.USD)
+        .stockType(StockType.STOCK)
+        .build();
+  }
+
+  private Stock createSampleStock2() {
+    return Stock.builder()
+        .name("Google LLC")
+        .stockIdentifier("GOOGL")
+        .amount(BigDecimal.valueOf(5.0))
+        .sumDescription("Search engine stock")
+        .fullDescription("Information about Google stock purchase.")
+        .tradingVenue(TradingVenue.NASDAQ)
+        .purchaseDate(LocalDateTime.of(2024, 4, 10, 9, 0, 0))
+        .purchasePricePerPiece(BigDecimal.valueOf(150.00))
+        .purchasePriceTotal(BigDecimal.valueOf(750.00)) // 5.0 * 150.00
+        .currency(Currency.USD)
+        .stockType(StockType.STOCK)
+        .build();
+  }
+
+  private FullStockDTO createSampleFullStockDTO2() {
+    return FullStockDTO.builder()
+        .name("Google LLC")
+        .stockIdentifier("GOOGL")
+        .amount(BigDecimal.valueOf(5.0))
+        .sumDescription("Search engine stock")
+        .fullDescription("Information about Google stock purchase.")
+        .tradingVenue(TradingVenue.NASDAQ)
+        .purchaseDate(LocalDateTime.of(2024, 4, 10, 9, 0, 0))
+        .purchasePricePerPiece(BigDecimal.valueOf(150.00))
+        .purchasePriceTotal(BigDecimal.valueOf(750.00))
+        .currency(Currency.USD)
+        .stockType(StockType.STOCK)
+        .build();
+  }
+
+  private StockDTO createSampleStockDTO2() {
+    return StockDTO.builder()
+        .name("Google LLC")
+        .stockIdentifier("GOOGL")
+        .amount(BigDecimal.valueOf(5.0))
+        .description("Search engine stock")
+        .build();
+  }
+
   @Test
   @DisplayName("Should correctly map Stock entity to FullStockDTO")
   void shouldMapStockToFullStockDTO() {
-
-    // Arrange
-    Stock stockEntity = Stock.builder()
-        .id(1L)
-        .name("Apple Inc.")
-        .stockIdentifier("AAPL")
-        .amount(BigDecimal.valueOf(2.0)) // Double típus
-        .sumDescription("Tech giant shares")
-        .fullDescription("Detailed description about Apple shares purchase.")
-        .tradingVenue(TradingVenue.NASDAQ)
-        .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0)) // LocalDateTime
-        .purchasePricePerPiece(BigDecimal.valueOf(175.50))
-        .purchasePriceTotal(BigDecimal.valueOf(175.50))
-        .currency(Currency.USD)
-        .stockType(StockType.STOCK)
-        .build();
-
-    // Act
+    Stock stockEntity = createSampleStock2();
+    FullStockDTO fullStockDTO = createSampleFullStockDTO2();
     FullStockDTO resultDTO = stockMapper.toNewDTO(stockEntity);
+    assertThat(resultDTO).usingRecursiveComparison().isEqualTo(fullStockDTO);
 
-    // Assert
-    assertThat(resultDTO).isNotNull();
-    assertThat(resultDTO.getName()).isEqualTo(stockEntity.getName());
-    assertThat(resultDTO.getStockIdentifier()).isEqualTo(stockEntity.getStockIdentifier());
-    assertThat(resultDTO.getAmount()).isEqualTo(stockEntity.getAmount());
-    assertThat(resultDTO.getSumDescription()).isEqualTo(stockEntity.getSumDescription());
-    assertThat(resultDTO.getFullDescription()).isEqualTo(stockEntity.getFullDescription());
-    assertThat(resultDTO.getTradingVenue()).isEqualTo(stockEntity.getTradingVenue());
-    assertThat(resultDTO.getPurchaseDate()).isEqualTo(stockEntity.getPurchaseDate());
-    assertThat(resultDTO.getPurchasePricePerPiece()).isEqualTo(stockEntity.getPurchasePricePerPiece());
-    assertThat(resultDTO.getPurchasePriceTotal()).isEqualTo(stockEntity.getPurchasePriceTotal());
-    assertThat(resultDTO.getCurrency()).isEqualTo(stockEntity.getCurrency());
-    assertThat(resultDTO.getStockType()).isEqualTo(stockEntity.getStockType());
   }
 
-
   @Test
-  @DisplayName("Should correctly map Stock entity to FullStockDTO")
+  @DisplayName("Should correctly map FullStockDTO to Stock entity")
   void shouldMapFullStockDTOToStock() {
-
-    // Arrange
-    FullStockDTO fullStockDTO = FullStockDTO.builder()
-        .name("Apple Inc.")
-        .stockIdentifier("AAPL")
-        .amount(BigDecimal.valueOf(2.0))
-        .sumDescription("Tech giant shares")
-        .fullDescription("Detailed description about Apple shares purchase.")
-        .tradingVenue(TradingVenue.NASDAQ)
-        .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0))
-        .purchasePricePerPiece(BigDecimal.valueOf(20.10))
-        .purchasePriceTotal(BigDecimal.valueOf(40.20))
-        .currency(Currency.USD)
-        .stockType(StockType.STOCK)
-        .build();
-
-    // Act
-    Stock stockEntity = stockMapper.toEntity(fullStockDTO);
-
-    // Assert
-    assertThat(stockEntity).isNotNull();
-    assertThat(stockEntity.getName()).isEqualTo(fullStockDTO.getName());
-    assertThat(stockEntity.getStockIdentifier()).isEqualTo(fullStockDTO.getStockIdentifier());
-    assertThat(stockEntity.getAmount()).isEqualTo(fullStockDTO.getAmount());
-    assertThat(stockEntity.getSumDescription()).isEqualTo(fullStockDTO.getSumDescription());
-    assertThat(stockEntity.getFullDescription()).isEqualTo(fullStockDTO.getFullDescription());
-    assertThat(stockEntity.getTradingVenue()).isEqualTo(fullStockDTO.getTradingVenue());
-    assertThat(stockEntity.getPurchaseDate()).isEqualTo(fullStockDTO.getPurchaseDate());
-    assertThat(stockEntity.getPurchasePricePerPiece()).isEqualTo(fullStockDTO.getPurchasePricePerPiece());
-    assertThat(stockEntity.getPurchasePriceTotal()).isEqualTo(fullStockDTO.getPurchasePriceTotal());
-    assertThat(stockEntity.getCurrency()).isEqualTo(fullStockDTO.getCurrency());
-    assertThat(stockEntity.getStockType()).isEqualTo(fullStockDTO.getStockType());
+    FullStockDTO fullStockDTO = createSampleFullStockDTO2();
+    Stock stockEntity = createSampleStock2();
+    Stock resultEntity = stockMapper.toEntity(fullStockDTO);
+    assertThat(resultEntity).usingRecursiveComparison().isEqualTo(stockEntity);
   }
 
-
   @Test
-  @DisplayName("Should correctly map Stock entity to StockDTO (summary DTO)")
+  @DisplayName("Should correctly map Stock entity to StockDTO")
   void shouldMapStockToStockDTO() {
-
-    // Arrange
-    Stock stockEntity = Stock.builder()
-        .name("Tesla Inc.")
-        .stockIdentifier("TSLA")
-        .amount(BigDecimal.valueOf(20.0)) // Double
-        .sumDescription("Electric vehicle maker")
-        .fullDescription("Detailed description...")
-        .purchaseDate(LocalDateTime.now())
-        .currency(Currency.USD)
-        .stockType(StockType.STOCK)
-        .tradingVenue(TradingVenue.NASDAQ)
-        .purchasePricePerPiece(BigDecimal.valueOf(180.0))
-        .build();
-
-    // Act
+    Stock stockEntity = createSampleStock2();
+    StockDTO stockDTO = createSampleStockDTO2();
     StockDTO resultDTO = stockMapper.toDTO(stockEntity);
-
-    // Assert
-    assertThat(resultDTO).isNotNull();
-    assertThat(resultDTO.getName()).isEqualTo(stockEntity.getName());
-    assertThat(resultDTO.getStockIdentifier()).isEqualTo(stockEntity.getStockIdentifier());
-    assertThat(resultDTO.getAmount()).isEqualTo(stockEntity.getAmount());
-    assertThat(resultDTO.getDescription()).isEqualTo(stockEntity.getSumDescription());
+    assertThat(resultDTO).usingRecursiveComparison().isEqualTo(stockDTO);
   }
 
   @Test
-  @DisplayName("Should correctly update Stock oldStock entity to from FullStockDTO fullStockDTO")
+  @DisplayName("Should correctly update Stock entity from FullStockDTO")
   void shouldUpdateStockFromFullStockDTO() {
-
-    // Arrange
-    FullStockDTO fullStockDTO = FullStockDTO.builder()
-        .name("Apple Inc.")
-        .stockIdentifier("AAPL")
-        .amount(BigDecimal.valueOf(2.0))
-        .sumDescription("Tech giant shares")
-        .fullDescription("Detailed description about Apple shares purchase.")
-        .tradingVenue(TradingVenue.NASDAQ)
-        .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0))
-        .purchasePricePerPiece(BigDecimal.valueOf(20.10))
-        .purchasePriceTotal(BigDecimal.valueOf(40.20))
-        .currency(Currency.USD)
-        .stockType(StockType.STOCK)
-        .build();
-
-    Stock oldStock = Stock.builder()
-        .name("Tesla.")
-        .stockIdentifier("TSLA")
-        .amount(BigDecimal.valueOf(4.0))
-        .sumDescription("Tech giant shares")
-        .fullDescription("Detailed description about Apple shares purchase.")
-        .tradingVenue(TradingVenue.NASDAQ)
-        .purchaseDate(LocalDateTime.of(2024, 5, 15, 10, 30, 0))
-        .purchasePricePerPiece(BigDecimal.valueOf(25.00))
-        .purchasePriceTotal(BigDecimal.valueOf(100.00))
-        .currency(Currency.USD)
-        .stockType(StockType.STOCK)
-        .build();
-
-    // Act
+    FullStockDTO fullStockDTO = createSampleFullStockDTO2();
+    Stock oldStock = createSampleStock();
     stockMapper.updateStockFromFullStockDTO(fullStockDTO, oldStock);
-
-    // Assert
-    assertThat(oldStock.getName()).isEqualTo(fullStockDTO.getName());
-    assertThat(oldStock.getStockIdentifier()).isEqualTo(fullStockDTO.getStockIdentifier());
-    assertThat(oldStock.getAmount()).isEqualTo(fullStockDTO.getAmount());
-    assertThat(oldStock.getSumDescription()).isEqualTo(fullStockDTO.getSumDescription());
-    assertThat(oldStock.getFullDescription()).isEqualTo(fullStockDTO.getFullDescription());
-    assertThat(oldStock.getTradingVenue()).isEqualTo(fullStockDTO.getTradingVenue());
-    assertThat(oldStock.getPurchaseDate()).isEqualTo(fullStockDTO.getPurchaseDate());
-    assertThat(oldStock.getPurchasePricePerPiece()).isEqualTo(fullStockDTO.getPurchasePricePerPiece());
-    assertThat(oldStock.getCurrency()).isEqualTo(fullStockDTO.getCurrency());
-    assertThat(oldStock.getStockType()).isEqualTo(fullStockDTO.getStockType());
+    assertThat(oldStock).usingRecursiveComparison()
+        .ignoringFields("id")
+        .isEqualTo(fullStockDTO);
   }
 
   @Test
