@@ -1,0 +1,71 @@
+/* === Navbar Styling === */
+
+/* Main navbar container with background and bottom border */
+.navbar {
+  background-color: #007bff; /* Primary blue background */
+  border-bottom: 2px solid #0056b3; /* Slightly darker bottom border for visual separation */
+}
+
+/* Brand/logo styling */
+.navbar-brand {
+  font-size: 1.8rem;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.navbar-brand:hover {
+  color: #00d4ff; /* Lighter blue hover effect */
+}
+
+/* Navigation links */
+.nav-link {
+  color: #e0e0e0;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 1.5rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #00d4ff;
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Active link highlight */
+.nav-link.active {
+  color: #00d4ff;
+  font-weight: 700;
+}
+
+/* Navbar toggler (hamburger icon) for smaller screens */
+.navbar-toggler {
+  border-color: #00d4ff;
+}
+
+.navbar-toggler-icon {
+  background-color: #00d4ff;
+}
+
+/* Container padding inside the navbar */
+.container {
+  padding: 0 2rem;
+}
+
+/* === Responsive Adjustments for Smaller Screens === */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 0; /* Reduced vertical padding */
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem; /* Slightly smaller brand size on mobile */
+  }
+
+  .nav-link {
+    font-size: 0.95rem;
+    margin-left: 1rem;
+  }
+}

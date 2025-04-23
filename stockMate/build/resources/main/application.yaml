@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: stockMate
+
+  datasource:
+    url: jdbc:postgresql://localhost:26257/postgres
+    username: root
+    password: password
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        use_sql_comments: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+exchange:
+  api:
+    key: 832fbb78b6d27cf4385b78d0 # API key for the exchange rate service
+    base-url: https://v6.exchangerate-api.com/v6/ # Base URL for the exchange rate API
+
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+        security: TRACE
+      hibernate:
+        jpa: debug
+        jdbc: debug
+    com:
+      zkollonay:
+        moneymate: debug

@@ -1,0 +1,237 @@
+/* Global styles */
+body {
+  background-color: #121212; /* Dark background for a modern look */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean, readable font */
+  color: #e0e0e0; /* Light text color for contrast */
+}
+
+/* Container for the stock list */
+.stock-list-container {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1f1f1f, #292929); /* Dark gradient background */
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.8s ease;
+}
+
+/* Header section of stock list */
+.stock-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Title styling */
+.stock-list-title {
+  font-size: 2.2rem;
+  color: #00d4ff;
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+}
+
+/* Button for showing summary */
+.stock-summary-button {
+  background-color: #00d4ff;
+  color: #000;
+  font-weight: 500;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.stock-summary-button:hover {
+  background-color: #00a4cc;
+}
+
+/* List of stocks */
+.stock-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* Individual stock card */
+.stock-item {
+  background-color: #1e1e1e;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.stock-item:hover {
+  transform: scale(1.01);
+  background-color: #252525;
+}
+
+/* Text inside stock item */
+.stock-details p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.stock-details p span {
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Pagination area */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+/* Pagination buttons */
+.pagination-button {
+  background-color: #00d4ff;
+  color: #000;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover {
+  background-color: #00a4cc;
+}
+
+.pagination-button:disabled {
+  background-color: #444;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: #aaa;
+}
+
+/* Error message styling */
+.loading-error {
+  background-color: #ffcccb;
+  color: #800000;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* Entry fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .stock-details p {
+    font-size: 0.85rem;
+  }
+
+  .stock-list-title {
+    font-size: 1.6rem;
+  }
+
+  .stock-summary-button {
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+  }
+}
+
+/* Search bar input */
+.stock-search-input {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+  width: 250px;
+}
+
+/* Search and clear buttons */
+.stock-search-button,
+.stock-search-clear {
+  padding: 6px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.stock-search-clear {
+  background-color: #dc3545; /* Red for clear button */
+}
+
+.stock-search-button:hover {
+  background-color: #0056b3;
+}
+
+.stock-search-clear:hover {
+  background-color: #c82333;
+}
+
+/* Flex container for buttons and search bar */
+.header-side {
+  display: flex;
+  align-items: center;
+}
+
+/* ... korábbi CSS szabályok ... */
+
+/* Stílus a törlés gombhoz */
+.delete-stock-button {
+  background: none;
+  color: #ff6b6b; /* Pirosas szín a figyelemfelkeltéshez */
+  border: none;
+  padding: 0.5rem;
+  border-radius: 50%; /* Kör alakú gomb */
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute; /* Abszolút pozicionálás a stock elemen belül */
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  opacity: 0; /* Alapértelmezetten nem látható */
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.delete-stock-button:hover {
+  background-color: rgba(255, 107, 107, 0.2); /* Halvány piros háttér hoverre */
+  opacity: 1; /* Hoverre láthatóvá válik */
+}
+
+/* Stock elem stílusának kiegészítése a pozicionáláshoz */
+.stock-item {
+  /* ... korábbi stílusok ... */
+  position: relative; /* Hogy a benne lévő gombot abszolút pozicionálhassuk */
+}
+
+.stock-item:hover .delete-stock-button {
+  opacity: 1; /* Ha a stock elem fölé megyünk, a gomb láthatóvá válik */
+}
+
+/* ... további CSS szabályok ... */

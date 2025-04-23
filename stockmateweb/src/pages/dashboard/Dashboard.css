@@ -1,0 +1,32 @@
+.dashboard-hero {
+  position: relative;
+  height: 100vh; /* Full viewport height */
+  
+  /* Background image setup */
+  background-image: url('D:/Programming/Projects/StockMate/stockmateweb/public/Images/stock-1.jpg'); 
+  background-size: cover;        /* Ensures the image covers the entire area */
+  background-position: center;   /* Centers the image */
+  
+  /* Center content with flexbox */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  color: white;
+  padding: 3rem;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 80%; /* Responsive layout */
+}
+
+.overlay h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.overlay p {
+  font-size: 1.2rem;
+}

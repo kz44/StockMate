@@ -1,0 +1,114 @@
+.center-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #121212;
+    padding-bottom: 2rem;
+  }
+  
+  /* Form container */
+  .center-form form {
+    max-width: 700px;
+    width: 100%;
+    padding: 2rem 2.5rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #0066cc, #3388cc);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    animation: fadeIn 0.8s ease;
+  }
+  
+  /* Form header */
+  .center-form form h2,
+  .center-form form h3,
+  .center-form form .form-title {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Labels */
+  .center-form form label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: left;
+  }
+  
+  /* Input fields and selects */
+  .center-form form .form-control,
+  .center-form form select {
+    width: 100%;
+    margin-bottom: 1.2rem;
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #aaa;
+    background-color: #2c3e50;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Placeholder styling */
+  .center-form form .form-control::placeholder {
+    color: #ffffff;
+    opacity: 0.8;
+  }
+  
+  /* Focus effect */
+  .center-form form .form-control:focus,
+  .center-form form select:focus {
+    background-color: #34495e;
+    box-shadow: 0 0 5px #00d4ff;
+    outline: none;
+  }
+  
+  /* Buttons */
+  .center-form form .btn {
+    background-color: #00d4ff;
+    color: #000;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    display: flex; /* Added for alignment */
+    align-items: center; /* Vertically center icon and text */
+    justify-content: center; /* Horizontally center icon and text */
+    gap: 0.5rem; /* Space between icon and text */
+    color: #ffffff; /* Set text color to white */
+  }
+  
+  .center-form form .btn:hover {
+    background-color: #00a4cc;
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Style for the date icon */
+  .center-form form .btn i {
+    color: #ffffff; /* Set icon color to white */
+    margin-right: 0.5rem; /* Add some space to the right of the icon */
+  }
+  
+  .center-form h1 {
+    color: #ffffff;  /* Fehér szín a h1 szöveghez */
+  }
+  

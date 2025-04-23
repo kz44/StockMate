@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="StockMapper Unit Tests" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-04-17T07:18:28.508Z" hostname="ZOLI-LEG" time="0.105">
+  <properties/>
+  <testcase name="Should correctly map FullStockDTO to Stock entity" classname="org.zkollonay.stockmate.mapper.StockMapperTest" time="0.083"/>
+  <testcase name="Should correctly update Stock entity from FullStockDTO" classname="org.zkollonay.stockmate.mapper.StockMapperTest" time="0.004"/>
+  <testcase name="Should correctly map Stock entity to FullStockDTO" classname="org.zkollonay.stockmate.mapper.StockMapperTest" time="0.004"/>
+  <testcase name="Should correctly map Stock entity to StockDTO" classname="org.zkollonay.stockmate.mapper.StockMapperTest" time="0.004"/>
+  <testcase name="Should handle null input by throwing NullPointerException" classname="org.zkollonay.stockmate.mapper.StockMapperTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
