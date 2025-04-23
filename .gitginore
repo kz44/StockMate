@@ -1,0 +1,18 @@
+# --- Java / Gradle ---
+/build/
+/.gradle/
+
+# --- Node.js / React ---
+/node_modules/
+/dist/
+/build/
+
+# --- Általános ---
+*.log
+.env
+
+# --- IDE-k és OS fájlok ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
