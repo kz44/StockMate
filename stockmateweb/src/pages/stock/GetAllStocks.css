@@ -194,15 +194,13 @@ body {
   align-items: center;
 }
 
-/* ... korábbi CSS szabályok ... */
-
-/* Stílus a törlés gombhoz */
+/* Styling for the delete button */
 .delete-stock-button {
   background: none;
-  color: #ff6b6b; /* Pirosas szín a figyelemfelkeltéshez */
+  color: #ff6b6b; /* Red color for attention */
   border: none;
   padding: 0.5rem;
-  border-radius: 50%; /* Kör alakú gomb */
+  border-radius: 50%; /* Round button */
   cursor: pointer;
   font-size: 1rem;
   line-height: 1;
@@ -211,27 +209,24 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute; /* Abszolút pozicionálás a stock elemen belül */
+  position: absolute; /* Absolute positioning inside the stock item */
   top: 50%;
   right: 1rem;
   transform: translateY(-50%);
-  opacity: 0; /* Alapértelmezetten nem látható */
+  opacity: 0; /* Initially not visible */
   transition: opacity 0.3s ease, background-color 0.3s ease;
 }
 
 .delete-stock-button:hover {
-  background-color: rgba(255, 107, 107, 0.2); /* Halvány piros háttér hoverre */
-  opacity: 1; /* Hoverre láthatóvá válik */
+  background-color: rgba(255, 107, 107, 0.2); /* Light red background on hover */
+  opacity: 1; /* Becomes visible on hover */
 }
 
-/* Stock elem stílusának kiegészítése a pozicionáláshoz */
+/* Stock item style for positioning */
 .stock-item {
-  /* ... korábbi stílusok ... */
-  position: relative; /* Hogy a benne lévő gombot abszolút pozicionálhassuk */
+  position: relative; /* To position the delete button inside */
 }
 
 .stock-item:hover .delete-stock-button {
-  opacity: 1; /* Ha a stock elem fölé megyünk, a gomb láthatóvá válik */
+  opacity: 1; /* Delete button becomes visible when hovering over the stock item */
 }
-
-/* ... további CSS szabályok ... */

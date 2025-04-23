@@ -3,22 +3,24 @@ import "./GetAllStocks.css";
 import { useNavigate } from 'react-router-dom';
 
 const GetAllStocks = () => {
-    const [stocks, setStocks] = useState([]);
-    const [page, setPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchMode, setSearchMode] = useState(false);
+    const [stocks, setStocks] = useState([]); // State to store stocks
+    const [page, setPage] = useState(0); // State to store the current page number
+    const [totalPages, setTotalPages] = useState(1); // State to store total number of pages
+    const [loading, setLoading] = useState(true); // State to handle loading state
+    const [error, setError] = useState(null); // State to handle error message
+    const [searchTerm, setSearchTerm] = useState(''); // State to handle search input
+    const [searchMode, setSearchMode] = useState(false); // State to toggle search mode
 
     const navigate = useNavigate();
 
+    // Fetch stocks when page or searchMode changes
     useEffect(() => {
         if (!searchMode) {
             fetchStocks(page);
         }
     }, [page, searchMode]);
 
+    // Function to fetch stocks with pagination
     const fetchStocks = async (pageNumber) => {
         setLoading(true);
         setError(null);
@@ -39,6 +41,7 @@ const GetAllStocks = () => {
         }
     };
 
+    // Function to fetch filtered stocks based on search term
     const fetchFilteredStocks = async () => {
         setLoading(true);
         setError(null);
@@ -60,18 +63,21 @@ const GetAllStocks = () => {
         }
     };
 
+    // Function to clear search and reset the state to default
     const handleClearSearch = () => {
         setSearchTerm('');
         setSearchMode(false);
         fetchStocks(0);
     };
 
+    // Navigate to stock summary page
     const handleSummaryClick = () => {
         navigate('/stocks/summary');
     };
 
+    // Handle stock deletion after confirmation
     const handleDeleteStock = async (id) => {
-        if (window.confirm(`Biztosan törölni szeretnéd a(z) ${stocks.find(stock => stock.stockIdentifier === stock.id)?.name} nevű részvényt?`)) {
+        if (window.confirm(`Are you sure you want to delete the stock named ${stocks.find(stock => stock.stockIdentifier === stock.id)?.name}?`)) {
             try {
                 const response = await fetch(`http://localhost:8080/stocks/${id}`, {
                     method: 'DELETE',
@@ -79,11 +85,11 @@ const GetAllStocks = () => {
                 if (!response.ok) {
                     throw new Error(`Error deleting stock: ${response.status}`);
                 }
-                // Sikeres törlés esetén frissítjük a listát
+                // Refresh the list after successful deletion
                 if (!searchMode) {
                     fetchStocks(page);
                 } else {
-                    fetchFilteredStocks(); // Ha keresési módban voltunk, újra lefuttatjuk a szűrést
+                    fetchFilteredStocks(); // Re-run the search if we were in search mode
                 }
             } catch (error) {
                 setError(error.message);
@@ -97,67 +103,67 @@ const GetAllStocks = () => {
                 <div className="header-side">
                     <input
                         type="text"
-                        placeholder="Keresés név, azonosító vagy leírás alapján..."
+                        placeholder="Search by name, identifier, or description..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="stock-search-input"
                     />
-                    <button onClick={fetchFilteredStocks} className="stock-search-button">Keresés</button>
+                    <button onClick={fetchFilteredStocks} className="stock-search-button">Search</button>
                     {searchMode && (
                         <button onClick={handleClearSearch} className="stock-search-clear">X</button>
                     )}
                 </div>
 
-                <h2 className="stock-list-title">Részvényeim</h2>
+                <h2 className="stock-list-title">My Stocks</h2>
                 <button className="stock-summary-button" onClick={handleSummaryClick}>
-                    Részvény Összefoglalóm
+                    Stock Summary
                 </button>
             </div>
 
-            {loading && <p className="loading-error">Betöltés...</p>}
-            {error && <p className="loading-error">Hiba: {error}</p>}
+            {loading && <p className="loading-error">Loading...</p>}
+            {error && <p className="loading-error">Error: {error}</p>}
 
             {!loading && !error && (
                 <>
                     <ul className="stock-list">
-                    {stocks.map(stock => {
-    return (
-    <li key={stock.id} className="stock-item">
-        <div className="stock-details">
-            {searchMode ? (
-                <>
-                    <p>Név: <span>{stock.name}</span></p>
-                    <p>Azonosító: <span>{stock.stockIdentifier}</span></p>
-                    <p>Mennyiség: <span>{stock.amount}</span></p>
-                    <p>Leírás: <span>{stock.description}</span></p>
-                </>
-            ) : (
-                <>
-                    <p>Név: <span>{stock.name}</span></p>
-                    <p>Azonosító: <span>{stock.stockIdentifier}</span></p>
-                    <p>Mennyiség: <span>{stock.amount}</span></p>
-                    <p>Rövid leírás: <span>{stock.sumDescription}</span></p>
-                    <p>Teljes leírás: <span>{stock.fullDescription}</span></p>
-                    <p>Tőzsde: <span>{stock.tradingVenue}</span></p>
-                    <p>Vásárlás dátuma: <span>{stock.purchaseDate || 'Nincs adat'}</span></p>
-                    <p>Vételár / darab: <span>{stock.purchasePricePerPiece} {stock.currency}</span></p>
-                    <p>Összes vételár: <span>{stock.purchasePriceTotal ? `${stock.purchasePriceTotal} ${stock.currency}` : 'Nincs adat'}</span></p>
-                    <p>Pénznem: <span>{stock.currency}</span></p>
-                    <p>Típus: <span>{stock.stockType}</span></p>
-                    {/* Törlés gomb megjelenítése csak ha nem vagyunk keresési módban */}
-                    <button
-                        className="delete-stock-button"
-                        onClick={() => handleDeleteStock(stock.id)}
-                    >
-                        X
-                    </button>
-                </>
-            )}
-        </div>
-    </li>
-);
-})}
-</ul>
+                        {stocks.map(stock => {
+                            return (
+                                <li key={stock.id} className="stock-item">
+                                    <div className="stock-details">
+                                        {searchMode ? (
+                                            <>
+                                                <p>Name: <span>{stock.name}</span></p>
+                                                <p>Identifier: <span>{stock.stockIdentifier}</span></p>
+                                                <p>Amount: <span>{stock.amount}</span></p>
+                                                <p>Description: <span>{stock.description}</span></p>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <p>Name: <span>{stock.name}</span></p>
+                                                <p>Identifier: <span>{stock.stockIdentifier}</span></p>
+                                                <p>Amount: <span>{stock.amount}</span></p>
+                                                <p>Short Description: <span>{stock.sumDescription}</span></p>
+                                                <p>Full Description: <span>{stock.fullDescription}</span></p>
+                                                <p>Trading Venue: <span>{stock.tradingVenue}</span></p>
+                                                <p>Purchase Date: <span>{stock.purchaseDate || 'No data'}</span></p>
+                                                <p>Purchase Price per Piece: <span>{stock.purchasePricePerPiece} {stock.currency}</span></p>
+                                                <p>Total Purchase Price: <span>{stock.purchasePriceTotal ? `${stock.purchasePriceTotal} ${stock.currency}` : 'No data'}</span></p>
+                                                <p>Currency: <span>{stock.currency}</span></p>
+                                                <p>Type: <span>{stock.stockType}</span></p>
+                                                {/* Show delete button only if not in search mode */}
+                                                <button
+                                                    className="delete-stock-button"
+                                                    onClick={() => handleDeleteStock(stock.id)}
+                                                >
+                                                    X
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
 
                     {!searchMode && (
                         <div className="pagination-container">
@@ -166,7 +172,7 @@ const GetAllStocks = () => {
                                 disabled={page === 0}
                                 className="pagination-button"
                             >
-                                Előző
+                                Previous
                             </button>
                             <span className="pagination-info"> {page + 1} / {totalPages} </span>
                             <button
@@ -174,7 +180,7 @@ const GetAllStocks = () => {
                                 disabled={page === totalPages - 1}
                                 className="pagination-button"
                             >
-                                Következő
+                                Next
                             </button>
                         </div>
                     )}
