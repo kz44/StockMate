@@ -3,6 +3,7 @@
 /* Navbar háttér színének beállítása feketével */
 .main-navbar {
   background-color: #000 !important; /* Erősebb háttérszín beállítása */
+  padding: 1.5rem 0; /* Növeli a navbar magasságát függőlegesen */
 }
 
 /* Brand/logo styling */
@@ -56,7 +57,7 @@
 /* === Responsive Adjustments for Smaller Screens === */
 @media (max-width: 768px) {
   .navbar {
-    padding: 1rem 0; /* Reduced vertical padding */
+    padding: 1.5rem 0; /* Növelt vertikális padding mobilon is */
   }
 
   .navbar-brand {
