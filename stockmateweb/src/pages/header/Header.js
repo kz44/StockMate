@@ -2,17 +2,18 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
+import './Header.css'; 
 
 // Main header component with navigation bar
 const Header = () => {
   return (
     <>
       {/* Bootstrap Navbar with primary background and dark text variant */}
-      <Navbar bg="primary" variant="dark">
+      <Navbar className="main-navbar">
         <Container>
           {/* Brand title linking to the homepage */}
           <Navbar.Brand as={Link} to="/">
-            <strong>Tőzsde kezelési rendszer</strong>
+            <strong>StockMate</strong>
           </Navbar.Brand>
 
           {/* Navigation links aligned to the right */}
