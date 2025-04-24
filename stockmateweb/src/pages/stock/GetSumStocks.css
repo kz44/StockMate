@@ -149,10 +149,10 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 1rem; /* Tedd lejjebb, hogy a gomb a szöveg alatt legyen */
+  margin-top: 1rem; 
   font-size: 0.9rem;
-  display: block; /* Ahhoz, hogy az egész gomb egy blokk legyen és a szöveg alatt jelenjen meg */
-  width: fit-content; /* Alapértelmezés szerint csak annyi széles legyen, amennyi szükséges */
+  display: block; 
+  width: fit-content; 
   margin-left: auto;
   margin-right: auto;
 }

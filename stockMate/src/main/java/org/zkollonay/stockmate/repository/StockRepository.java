@@ -70,7 +70,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
   @Query("SELECT s FROM Stock s WHERE s.purchaseDate BETWEEN :startDate AND :endDate")
   List<Stock> findByPurchaseDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 
-  
+
   /**
    * Retrieves the distinct full description of a stock based on its identifier.
    *
@@ -95,7 +95,6 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
    *
    * @return A list of Stock objects purchased in the specified year.
    */
-   // TASK: modify group by years
   @Query("SELECT s FROM Stock s WHERE s.purchaseDate IS NOT NULL")
   List<Stock> findAllWithPurchaseDate();
 }
