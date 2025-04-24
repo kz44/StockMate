@@ -13,7 +13,9 @@ import org.zkollonay.stockmate.repository.StockRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -119,6 +121,19 @@ public class StockServiceImp implements StockService {
     return stockMapper.toNewDTO(oldStock);
   }
 
+  /**
+   * Retrieve stock with the given id.
+   *
+   * @param stockID The identifier of the stock.
+   * @return a FullStockDTO objects with the given id.
+   */
+  @Override
+  public FullStockDTO getStockById(final long stockID) {
+    return stockRepository.findById(stockID)
+        .map(stockMapper::toNewDTO)
+        .orElseThrow(() -> new EntityNotFoundException("Stock not found with ID: " + stockID));
+  }
+
 
   /**
    * Filters stocks based on a given filter string in name, summary description, or stock identifier.
@@ -161,13 +176,16 @@ public class StockServiceImp implements StockService {
 
 
   /**
-   * Retrieves stocks purchased in a specific year.
+   * Retrieves stocks purchased grouped by purchase year.
    *
-   * @param year The year of purchase.
    * @return A list of FullStockDTO objects purchased in the specified year.
    */
   @Override
-  public List<FullStockDTO> getStocksByYear(Integer year) {
-    return stockRepository.findByPurchaseYear(year).stream().map(stockMapper::toNewDTO).toList();
+  public Map<Integer, List<FullStockDTO>> getStocksByYear() {
+    List<Stock> stocks = stockRepository.findAllWithPurchaseDate();
+
+    return stocks.stream().filter(stock -> stock.getPurchaseDate() != null)
+        .map(stockMapper::toNewDTO)
+        .collect(Collectors.groupingBy(stock -> stock.getPurchaseDate().getYear()));
   }
 }

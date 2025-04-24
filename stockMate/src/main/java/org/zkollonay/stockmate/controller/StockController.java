@@ -13,6 +13,7 @@ import org.zkollonay.stockmate.service.StockService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -90,7 +91,6 @@ public class StockController {
    */
   @DeleteMapping("/{stockID}")
   public ResponseEntity<Void> deleteStock(@PathVariable long stockID) {
-    System.out.println("Törlés hívása: ID = " + stockID);
     stockService.deleteStockById(stockID);
     return ResponseEntity.noContent().build();
   }
@@ -108,6 +108,17 @@ public class StockController {
     return ResponseEntity.ok(stockService.updateStockById(fullStockDTO, stockID));
   }
 
+  /**
+   * Retrieve stock with a specific stock id.
+   *
+   * @param stockID The id of the stock.
+   * @return ResponseEntity containing a FullStockDTO object.
+   */
+  @GetMapping("/id/{stockID}")
+  public ResponseEntity<FullStockDTO> getStockById(@PathVariable long stockID) {
+    return ResponseEntity.ok(stockService.getStockById(stockID));
+  }
+
 
   /**
    * Searches for stocks based on a filter.
@@ -121,7 +132,7 @@ public class StockController {
   }
 
 
-  /**
+  /** NOT IN USE
    * Retrieves stocks purchased within a specific date range.
    *
    * @param fromDate The starting date of the range.
@@ -148,13 +159,12 @@ public class StockController {
 
 
   /**
-   * Retrieves stocks purchased in a specific year.
+   * Retrieves stocks purchased grouped by purchase year.
    *
-   * @param year The year of purchase.
    * @return ResponseEntity containing a list of FullStockDTO objects.
    */
   @GetMapping("/by-purchase-year")
-  public ResponseEntity<List<FullStockDTO>> getStocksByYear(@RequestParam int year) {
-    return ResponseEntity.ok(stockService.getStocksByYear(year));
+  public ResponseEntity<Map<Integer, List<FullStockDTO>>> getStocksByYear() {
+    return ResponseEntity.ok(stockService.getStocksByYear());
   }
 }

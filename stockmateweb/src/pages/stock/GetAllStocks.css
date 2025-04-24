@@ -218,7 +218,13 @@ body {
 }
 
 .delete-stock-button:hover {
-  background-color: rgba(255, 107, 107, 0.2); /* Light red background on hover */
+  color: red;
+  background-color: #00d4ff; /* Light red background on hover */
+  opacity: 1; /* Becomes visible on hover */
+}
+
+.modify-stock-button:hover {
+  background-color: rgba(53, 21, 234, 0.2); /* Blue background on hover */
   opacity: 1; /* Becomes visible on hover */
 }
 
@@ -229,4 +235,48 @@ body {
 
 .stock-item:hover .delete-stock-button {
   opacity: 1; /* Delete button becomes visible when hovering over the stock item */
+}
+
+/* Container for the stock edit form */
+.stock-edit-form {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color:#00d4ff
+}
+
+/* Style for labels inside the form */
+.stock-form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Style for input and textarea fields */
+.stock-form input, .stock-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  box-sizing: border-box;
+}
+
+/* Buttons container */
+.form-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.modify-stock-button {
+  background-color: #00d4ff;
+  color: #000;
+  font-weight: 500;
+  border: none;
+  padding: 0.1rem 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 2rem;
 }

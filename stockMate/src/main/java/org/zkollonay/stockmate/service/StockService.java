@@ -8,6 +8,7 @@ import org.zkollonay.stockmate.DTO.StockDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface StockService {
 
@@ -21,9 +22,11 @@ public interface StockService {
 
   StockDTO getSumStockByStocksIdentifier(String stockIdentifier);
 
-  void deleteStockById(@PathVariable long stockID);
+  void deleteStockById(long stockID);
 
   FullStockDTO updateStockById(final FullStockDTO fullStockDTO, long stockID);
+
+  FullStockDTO getStockById(long stockID);
 
   List<StockDTO> filterStocks(String filter);
 
@@ -31,5 +34,5 @@ public interface StockService {
 
   String getFullDescriptionByStocksIdentifier(String stockIdentifier);
 
-  List<FullStockDTO> getStocksByYear(Integer year);
+  Map<Integer, List<FullStockDTO>> getStocksByYear();
 }
